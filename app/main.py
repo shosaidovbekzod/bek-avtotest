@@ -17,8 +17,11 @@ app.include_router(quiz.router)
 app.include_router(admin.router)
 
 app.mount("/static", StaticFiles(directory=ROOT_DIR / "static"), name="static")
-app.mount("/drawables", StaticFiles(directory=ROOT_DIR / "res" / "drawable"), name="drawables")
 app.mount("/materials", StaticFiles(directory=ROOT_DIR / "assets"), name="materials")
+
+drawables_dir = ROOT_DIR / "res" / "drawable"
+if drawables_dir.exists():
+    app.mount("/drawables", StaticFiles(directory=drawables_dir), name="drawables")
 
 
 @app.on_event("startup")
