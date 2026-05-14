@@ -400,12 +400,14 @@ function renderQuiz() {
   const correctAnswer = question.answers.find((answer) => answer.is_correct || answer.id === question.correct_answer_id);
   const selectedAnswer = question.answers.find((answer) => answer.id === selected);
   const isCorrect = hasAnswered && selectedAnswer?.id === correctAnswer?.id;
+  const isFirstQuestion = state.currentIndex === 0;
+  const isLastQuestion = state.currentIndex === state.currentQuestions.length - 1;
   content.innerHTML = `
     <section class="exam-screen">
       <div class="exam-toolbar">
         <div class="exam-timer" aria-label="Qolgan vaqt"><span data-quiz-timer>${formatTime(getRemainingSeconds())}</span></div>
         <div class="exam-numbers" aria-label="Savollar ro'yxati">
-          <button class="exam-step edge" data-action="prev" type="button" ${state.currentIndex === 0 ? "disabled" : ""}>«</button>
+          <button class="exam-step edge" data-action="prev" type="button" ${isFirstQuestion ? "disabled" : ""}>«</button>
           ${state.currentQuestions
             .map((item, index) => {
               const status = answerStatus(item);
@@ -413,7 +415,7 @@ function renderQuiz() {
               return `<button class="exam-step ${status} ${active}" data-question-index="${index}" type="button">${index + 1}</button>`;
             })
             .join("")}
-          <button class="exam-step edge" data-action="next" type="button" ${state.currentIndex === state.currentQuestions.length - 1 ? "disabled" : ""}>»</button>
+          <button class="exam-step edge" data-action="next" type="button" ${isLastQuestion ? "disabled" : ""}>»</button>
         </div>
         <button class="finish-exam" data-action="finish" type="button">TESTNI<br>YAKUNLASH</button>
       </div>
@@ -421,6 +423,14 @@ function renderQuiz() {
         <span>Savol ${state.currentIndex + 1} / ${state.currentQuestions.length}</span>
         <h2>${escapeHtml(question.text)}</h2>
       </div>
+      ${
+        hasAnswered
+          ? `<div class="answer-feedback exam-status-feedback ${isCorrect ? "ok" : "bad"}">
+              <strong>${isCorrect ? "To'g'ri javob!" : "Xato javob."}</strong>
+              <p>${escapeHtml(question.explanation || "Bu savol uchun izoh hali qo'shilmagan.")}</p>
+            </div>`
+          : ""
+      }
       <div class="exam-workspace ${question.image ? "" : "no-image"}">
         <div class="exam-media">
           ${
@@ -450,16 +460,20 @@ function renderQuiz() {
             .join("")}
         </div>
       </div>
-      ${
-        hasAnswered
-          ? `<div class="answer-feedback ${isCorrect ? "ok" : "bad"}">
-              <strong>${isCorrect ? "To'g'ri javob!" : "Xato javob."}</strong>
-              <p>${escapeHtml(question.explanation || "Bu savol uchun izoh hali qo'shilmagan.")}</p>
-            </div>`
-          : ""
-      }
+      <div class="exam-bottom-actions" aria-label="Savollar bo'yicha harakatlanish">
+        <button class="exam-nav-button secondary" data-action="prev" type="button" ${isFirstQuestion ? "disabled" : ""}>
+          <span aria-hidden="true">‹</span>
+          Oldingi
+        </button>
+        <span class="exam-current-count">${state.currentIndex + 1} / ${state.currentQuestions.length}</span>
+        <button class="exam-nav-button primary" data-action="next" type="button" ${isLastQuestion ? "disabled" : ""}>
+          Keyingi
+          <span aria-hidden="true">›</span>
+        </button>
+      </div>
     </section>`;
   ensureQuizTimer();
+  document.querySelector(".exam-step.active")?.scrollIntoView({ inline: "center", block: "nearest" });
 }
 
 async function finishQuiz() {
