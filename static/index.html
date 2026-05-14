@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="uz">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>bek_avtotest</title>
+    <link rel="stylesheet" href="/static/css/app.css" />
+  </head>
+  <body>
+    <div id="app" class="app-shell">
+      <aside class="sidebar" aria-label="Asosiy menu">
+        <div class="brand">
+          <img class="brand-logo" src="/static/assets/logo-bek-avtotest.svg" alt="" />
+          <div>
+            <strong>bek_avtotest</strong>
+            <small>Haydovchilar imtihoni</small>
+          </div>
+        </div>
+        <nav id="sideNav" class="side-nav"></nav>
+        <div class="sidebar-footer">
+          <button id="themeBtn" class="icon-button" title="Rang rejimi" type="button">
+            <span class="sun-icon"></span>
+          </button>
+          <button id="adminBtn" class="text-button hidden" type="button">Admin panel</button>
+        </div>
+      </aside>
+
+      <main class="main">
+        <header class="topbar">
+          <button id="backBtn" class="top-icon hidden" type="button" aria-label="Orqaga">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
+          </button>
+          <h1 id="viewTitle">Asosiy</h1>
+          <div class="top-actions">
+            <button id="loginBtn" class="primary-button" type="button">Kirish</button>
+            <button id="logoutBtn" class="ghost-button hidden" type="button">Chiqish</button>
+          </div>
+        </header>
+
+        <section id="content" class="content" aria-live="polite"></section>
+      </main>
+
+      <nav id="bottomNav" class="bottom-nav" aria-label="Pastki menu"></nav>
+    </div>
+
+    <dialog id="authDialog" class="modal">
+      <form id="authForm" class="modal-card" method="dialog">
+        <button class="modal-close" value="cancel" type="button" aria-label="Yopish">x</button>
+        <h2 id="authTitle">Kirish</h2>
+        <label>
+          Login
+          <input id="usernameInput" name="username" autocomplete="username" required minlength="3" />
+        </label>
+        <label>
+          Parol
+          <input id="passwordInput" name="password" type="password" autocomplete="current-password" required minlength="5" />
+        </label>
+        <label id="fullNameWrap" class="hidden">
+          Ism familiya
+          <input id="fullNameInput" name="full_name" autocomplete="name" />
+        </label>
+        <p id="authError" class="form-error"></p>
+        <button id="authSubmit" class="primary-button full" type="submit">Kirish</button>
+        <button id="authModeBtn" class="link-button" type="button">Ro'yxatdan o'tish</button>
+      </form>
+    </dialog>
+
+    <script src="/static/js/app.js" type="module"></script>
+  </body>
+</html>

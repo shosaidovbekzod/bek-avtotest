@@ -1,0 +1,17 @@
+[Unit]
+Description=bek_avtotest FastAPI service
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=ubuntu
+Group=www-data
+WorkingDirectory=/opt/bek_avtotest
+EnvironmentFile=/etc/bek-avtotest.env
+ExecStart=/opt/bek_avtotest/.venv/bin/uvicorn app.main:app --host 127.0.0.1 --port 8000
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
