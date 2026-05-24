@@ -1509,6 +1509,224 @@ body.is-loading::before {
   }
 }
 
+/* Liquid Glass mode */
+body.liquid-glass {
+  color-scheme: dark;
+  --accent: #22d3ee;
+  --accent-strong: #0ea5e9;
+  --premium: #34d399;
+  --danger: #fb7185;
+  --ok: #34d399;
+  --bg: #06111d;
+  --surface: rgba(255, 255, 255, 0.13);
+  --surface-2: rgba(255, 255, 255, 0.09);
+  --text: #f8fbff;
+  --muted: #bad2e5;
+  --line: rgba(203, 241, 255, 0.24);
+  --nav: rgba(4, 15, 27, 0.58);
+  --nav-active: rgba(34, 211, 238, 0.22);
+  --shadow: 0 24px 70px rgba(0, 0, 0, 0.34);
+  background:
+    radial-gradient(circle at 16% 12%, rgba(34, 211, 238, 0.28), transparent 28%),
+    radial-gradient(circle at 76% 8%, rgba(16, 185, 129, 0.2), transparent 24%),
+    radial-gradient(circle at 48% 90%, rgba(59, 130, 246, 0.22), transparent 30%),
+    linear-gradient(135deg, #020617 0%, #071827 46%, #052f35 100%);
+  background-size: 140% 140%;
+  animation: liquid-mesh 16s ease-in-out infinite alternate;
+}
+
+body.liquid-glass::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.045) 1px, transparent 1px),
+    repeating-radial-gradient(circle at 78% 24%, rgba(125, 249, 255, 0.15) 0 1px, transparent 1px 12px);
+  background-size: 64px 64px, 64px 64px, 18px 18px;
+  mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.95), transparent 82%);
+}
+
+@keyframes liquid-mesh {
+  0% {
+    background-position: 0% 35%;
+  }
+  100% {
+    background-position: 100% 65%;
+  }
+}
+
+body.liquid-glass .sidebar,
+body.liquid-glass .topbar,
+body.liquid-glass .premium-hero,
+body.liquid-glass .menu-row,
+body.liquid-glass .ticket-card,
+body.liquid-glass .quiz-card,
+body.liquid-glass .admin-panel,
+body.liquid-glass .empty-state,
+body.liquid-glass .sign-card,
+body.liquid-glass .topic-card,
+body.liquid-glass .fine-card,
+body.liquid-glass .settings-row,
+body.liquid-glass .result-row,
+body.liquid-glass .modal-card,
+body.liquid-glass .stat-cell,
+body.liquid-glass .filter-chip,
+body.liquid-glass .search-input,
+body.liquid-glass .number-input,
+body.liquid-glass .settings-row select,
+body.liquid-glass .admin-form input,
+body.liquid-glass .admin-form textarea,
+body.liquid-glass .admin-form select,
+body.liquid-glass .modal-card input {
+  border-color: rgba(214, 251, 255, 0.22);
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0.07));
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.22),
+    0 22px 58px rgba(0, 0, 0, 0.28);
+  backdrop-filter: blur(22px) saturate(150%);
+}
+
+body.liquid-glass .sidebar {
+  background:
+    radial-gradient(circle at 45% 0%, rgba(34, 211, 238, 0.18), transparent 38%),
+    linear-gradient(180deg, rgba(2, 10, 22, 0.7), rgba(5, 21, 35, 0.48));
+}
+
+body.liquid-glass .topbar {
+  color: var(--text);
+}
+
+body.liquid-glass .premium-hero {
+  background:
+    radial-gradient(circle at 88% 22%, rgba(34, 211, 238, 0.22), transparent 28%),
+    radial-gradient(circle at 14% 8%, rgba(52, 211, 153, 0.12), transparent 20%),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.06));
+}
+
+body.liquid-glass .premium-hero::after {
+  opacity: 0.72;
+  background:
+    linear-gradient(135deg, transparent 35%, rgba(34, 211, 238, 0.2)),
+    repeating-radial-gradient(circle at 0 0, rgba(255, 255, 255, 0.18) 0 1px, transparent 1px 9px);
+}
+
+body.liquid-glass .premium-hero h2,
+body.liquid-glass .home-section-title h3,
+body.liquid-glass .section-head h2,
+body.liquid-glass .topbar h1,
+body.liquid-glass .menu-row strong,
+body.liquid-glass .ticket-card,
+body.liquid-glass .sign-card strong,
+body.liquid-glass .topic-card strong,
+body.liquid-glass .stat-cell strong {
+  color: #f8fbff;
+  text-shadow: 0 12px 34px rgba(34, 211, 238, 0.12);
+}
+
+body.liquid-glass .hero-kicker,
+body.liquid-glass .result-id,
+body.liquid-glass .topic-card strong {
+  color: #67e8f9;
+}
+
+body.liquid-glass .primary-button,
+body.liquid-glass .exam-nav-button.primary,
+body.liquid-glass .filter-chip.active,
+body.liquid-glass .nav-item.active {
+  background: linear-gradient(135deg, rgba(34, 211, 238, 0.95), rgba(16, 185, 129, 0.9));
+  color: #03141c;
+  box-shadow: 0 18px 38px rgba(34, 211, 238, 0.24);
+}
+
+body.liquid-glass .secondary-button,
+body.liquid-glass .ghost-button,
+body.liquid-glass .text-button,
+body.liquid-glass .top-icon,
+body.liquid-glass .icon-button {
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(214, 251, 255, 0.22);
+}
+
+body.liquid-glass .menu-row img {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+body.liquid-glass .exam-screen {
+  background:
+    radial-gradient(circle at 82% 8%, rgba(34, 211, 238, 0.2), transparent 30%),
+    radial-gradient(circle at 22% 88%, rgba(16, 185, 129, 0.16), transparent 28%),
+    linear-gradient(135deg, rgba(2, 6, 23, 0.96), rgba(6, 24, 39, 0.94));
+  color: #f8fbff;
+}
+
+body.liquid-glass .exam-toolbar {
+  background: linear-gradient(180deg, rgba(2, 6, 23, 0.82), rgba(2, 6, 23, 0));
+}
+
+body.liquid-glass .exam-question-line h2,
+body.liquid-glass .exam-meta-line,
+body.liquid-glass .exam-current-count {
+  color: #f8fbff;
+}
+
+body.liquid-glass .exam-screen .answer-option,
+body.liquid-glass .exam-screen .question-image,
+body.liquid-glass .exam-bottom-actions,
+body.liquid-glass .finish-exam {
+  border-color: rgba(214, 251, 255, 0.22);
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0.08));
+  color: #f8fbff;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.18),
+    0 18px 45px rgba(0, 0, 0, 0.26);
+  backdrop-filter: blur(18px) saturate(145%);
+}
+
+body.liquid-glass .exam-screen .answer-option.correct {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.9), rgba(52, 211, 153, 0.78));
+  color: #03141c;
+}
+
+body.liquid-glass .exam-screen .answer-option.wrong {
+  background: rgba(251, 113, 133, 0.2);
+  color: #fecdd3;
+}
+
+body.liquid-glass .bottom-nav {
+  background: rgba(2, 10, 22, 0.7);
+  border-color: rgba(214, 251, 255, 0.18);
+  backdrop-filter: blur(20px);
+}
+
+body.liquid-glass .toast {
+  background: rgba(255, 255, 255, 0.16);
+  color: #f8fbff;
+  border-color: rgba(214, 251, 255, 0.24);
+}
+
+.sun-icon {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  display: inline-block;
+  background: #f59e0b;
+  box-shadow: 0 0 0 6px rgba(245, 158, 11, 0.14);
+}
+
+.sun-icon[data-mode="dark"] {
+  background: #a78bfa;
+  box-shadow: inset -6px -2px 0 #0b1220, 0 0 0 6px rgba(167, 139, 250, 0.14);
+}
+
+.sun-icon[data-mode="glass"] {
+  background: linear-gradient(135deg, rgba(34, 211, 238, 0.95), rgba(255, 255, 255, 0.55));
+  box-shadow: 0 0 18px rgba(34, 211, 238, 0.65), 0 0 0 6px rgba(34, 211, 238, 0.14);
+}
+
 @media (max-width: 480px) {
   .topbar h1 {
     font-size: 27px;

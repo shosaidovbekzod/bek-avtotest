@@ -29,6 +29,7 @@ const state = {
   fineQuery: "",
   bhmValue: Number(localStorage.getItem("bhmValue") || 412000),
   settings: JSON.parse(localStorage.getItem("appSettings") || '{"textSize":"normal","compact":false}'),
+  theme: localStorage.getItem("theme") || "light",
   authMode: "login",
 };
 
@@ -250,6 +251,29 @@ function applySettings() {
   document.body.classList.toggle("large-text", state.settings.textSize === "large");
   document.body.classList.toggle("compact-mode", Boolean(state.settings.compact));
   localStorage.setItem("appSettings", JSON.stringify(state.settings));
+}
+
+function themeLabel(mode = state.theme) {
+  if (mode === "dark") return "Dark";
+  if (mode === "glass") return "Liquid Glass";
+  return "Light";
+}
+
+function applyTheme(mode = state.theme) {
+  state.theme = ["light", "dark", "glass"].includes(mode) ? mode : "light";
+  document.body.classList.toggle("dark", state.theme === "dark");
+  document.body.classList.toggle("liquid-glass", state.theme === "glass");
+  localStorage.setItem("theme", state.theme);
+  themeBtn?.setAttribute("title", `Rang rejimi: ${themeLabel()}`);
+  themeBtn?.setAttribute("aria-label", `Rang rejimi: ${themeLabel()}`);
+  const icon = themeBtn?.querySelector(".sun-icon");
+  if (icon) icon.dataset.mode = state.theme;
+}
+
+function cycleTheme() {
+  const nextTheme = state.theme === "light" ? "dark" : state.theme === "dark" ? "glass" : "light";
+  applyTheme(nextTheme);
+  showToast(`Rang rejimi: ${themeLabel()}`, "info");
 }
 
 function money(value) {
@@ -763,8 +787,8 @@ function renderSettings() {
             <input data-setting="compact" type="checkbox" ${state.settings.compact ? "checked" : ""} />
           </label>
           <div class="settings-row">
-            <span><strong>Rang rejimi</strong><small>Yorug' yoki qorong'i interfeys</small></span>
-            <button class="secondary-button" data-action="toggle-theme" type="button">Almashtirish</button>
+            <span><strong>Rang rejimi</strong><small>Hozir: ${themeLabel()}. Light, Dark va Liquid Glass mavjud.</small></span>
+            <button class="secondary-button" data-action="toggle-theme" type="button">${themeLabel()} rejimini almashtirish</button>
           </div>
           <div class="settings-row">
             <span><strong>Profil</strong><small>${state.user ? escapeHtml(state.user.username) : "Kirish qilinmagan"}</small></span>
@@ -923,7 +947,7 @@ document.addEventListener("click", async (event) => {
     }
   }
   if (action === "toggle-theme") {
-    themeBtn.click();
+    cycleTheme();
     renderSettings();
   }
   if (action === "login-settings") openAuth("login");
@@ -1049,12 +1073,9 @@ adminBtn.addEventListener("click", () => setView("admin", "Admin panel", renderA
 backBtn.addEventListener("click", goBack);
 authModeBtn.addEventListener("click", () => openAuth(state.authMode === "login" ? "register" : "login"));
 document.querySelector(".modal-close").addEventListener("click", () => authDialog.close());
-themeBtn.addEventListener("click", () => {
-  document.body.classList.toggle("dark");
-  localStorage.setItem("theme", document.body.classList.contains("dark") ? "dark" : "light");
-});
+themeBtn.addEventListener("click", cycleTheme);
 
-if (localStorage.getItem("theme") === "dark") document.body.classList.add("dark");
+applyTheme();
 applySettings();
 updateAuthChrome();
 renderNav();
