@@ -1,0 +1,353 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="5200" height="3300" viewBox="0 0 5200 3300">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#F5F8F7"/>
+      <stop offset="0.55" stop-color="#EDF4F2"/>
+      <stop offset="1" stop-color="#E7F0EE"/>
+    </linearGradient>
+    <linearGradient id="brand" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#075E63"/>
+      <stop offset="0.58" stop-color="#11858B"/>
+      <stop offset="1" stop-color="#24BFA3"/>
+    </linearGradient>
+    <linearGradient id="blue" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#159BE8"/>
+      <stop offset="1" stop-color="#075EAD"/>
+    </linearGradient>
+    <filter id="softShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="18" stdDeviation="22" flood-color="#07383A" flood-opacity="0.12"/>
+    </filter>
+    <filter id="cardShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="10" stdDeviation="14" flood-color="#052D30" flood-opacity="0.10"/>
+    </filter>
+    <style>
+      .font { font-family: Inter, Arial, sans-serif; }
+      .title { font: 800 64px Inter, Arial, sans-serif; fill: #07191C; letter-spacing: 0; }
+      .h1 { font: 800 44px Inter, Arial, sans-serif; fill: #07191C; letter-spacing: 0; }
+      .h2 { font: 800 28px Inter, Arial, sans-serif; fill: #07191C; letter-spacing: 0; }
+      .body { font: 500 20px Inter, Arial, sans-serif; fill: #486066; letter-spacing: 0; }
+      .small { font: 700 15px Inter, Arial, sans-serif; fill: #6A7D83; letter-spacing: 0; }
+      .label { font: 800 14px Inter, Arial, sans-serif; fill: #0D6F74; letter-spacing: 0; text-transform: uppercase; }
+      .white { fill: #FFFFFF; }
+      .muted { fill: #6A7D83; }
+      .ink { fill: #07191C; }
+      .line { stroke: #D9E5E3; stroke-width: 1.5; }
+      .card { fill: #FFFFFF; stroke: #D8E6E4; stroke-width: 1.5; filter: url(#cardShadow); }
+      .surface { fill: #F8FBFA; stroke: #D8E6E4; stroke-width: 1.2; }
+    </style>
+  </defs>
+
+  <rect width="5200" height="3300" fill="url(#bg)"/>
+
+  <!-- Cover / Brand -->
+  <g transform="translate(120 110)">
+    <rect width="1500" height="620" rx="40" class="card"/>
+    <g transform="translate(80 76)">
+      <rect width="112" height="112" rx="28" fill="url(#brand)"/>
+      <path d="M56 22 L91 39 V69 C91 92 73 105 56 111 C39 105 21 92 21 69 V39 Z" fill="#FFFFFF" opacity="0.96"/>
+      <path d="M56 35 L75 44 V68 C75 82 65 91 56 96 C47 91 37 82 37 68 V44 Z" fill="#F2C94C"/>
+      <path d="M56 45 L63 62 H50 Z" fill="#075E63"/>
+      <rect x="52" y="62" width="8" height="21" rx="4" fill="#075E63"/>
+      <circle cx="56" cy="88" r="4" fill="#075E63"/>
+    </g>
+    <text x="220" y="126" class="title">bek_avtotest</text>
+    <text x="224" y="174" class="body">Haydovchilar imtihoni uchun premium test platforma</text>
+    <text x="80" y="305" class="h1">Premium Figma Design Pack</text>
+    <text x="80" y="354" class="body">Logo, web dashboard, quiz interface, mobile mockup, tokenlar va komponentlar.</text>
+    <g transform="translate(80 430)">
+      <rect width="178" height="52" rx="14" fill="url(#brand)"/>
+      <text x="28" y="34" font-family="Inter, Arial" font-size="18" font-weight="800" fill="#fff">Start test</text>
+      <rect x="202" width="214" height="52" rx="14" fill="#F0F6F5" stroke="#CFE0DD"/>
+      <text x="230" y="34" font-family="Inter, Arial" font-size="18" font-weight="800" fill="#075E63">Design system</text>
+    </g>
+  </g>
+
+  <!-- Logo variants -->
+  <g transform="translate(1730 110)">
+    <rect width="760" height="620" rx="40" class="card"/>
+    <text x="54" y="74" class="h2">Logo variants</text>
+    <g transform="translate(70 130)">
+      <rect width="280" height="280" rx="36" fill="#0E2327"/>
+      <g transform="translate(74 58) scale(1.2)">
+        <rect width="112" height="112" rx="28" fill="url(#brand)"/>
+        <path d="M56 22 L91 39 V69 C91 92 73 105 56 111 C39 105 21 92 21 69 V39 Z" fill="#FFFFFF"/>
+        <path d="M56 35 L75 44 V68 C75 82 65 91 56 96 C47 91 37 82 37 68 V44 Z" fill="#F2C94C"/>
+        <path d="M56 45 L63 62 H50 Z" fill="#075E63"/>
+        <rect x="52" y="62" width="8" height="21" rx="4" fill="#075E63"/>
+        <circle cx="56" cy="88" r="4" fill="#075E63"/>
+      </g>
+      <text x="34" y="236" font-family="Inter, Arial" font-size="28" font-weight="900" fill="#fff">bek_avtotest</text>
+    </g>
+    <g transform="translate(405 130)">
+      <rect width="280" height="280" rx="36" fill="#F6FAF9" stroke="#D8E6E4"/>
+      <g transform="translate(84 48)">
+        <rect width="112" height="112" rx="28" fill="url(#brand)"/>
+        <path d="M56 22 L91 39 V69 C91 92 73 105 56 111 C39 105 21 92 21 69 V39 Z" fill="#FFFFFF"/>
+        <path d="M56 35 L75 44 V68 C75 82 65 91 56 96 C47 91 37 82 37 68 V44 Z" fill="#F2C94C"/>
+        <path d="M56 45 L63 62 H50 Z" fill="#075E63"/>
+        <rect x="52" y="62" width="8" height="21" rx="4" fill="#075E63"/>
+        <circle cx="56" cy="88" r="4" fill="#075E63"/>
+      </g>
+      <text x="44" y="225" font-family="Inter, Arial" font-size="26" font-weight="900" fill="#07191C">bek_avtotest</text>
+    </g>
+    <text x="70" y="500" class="body">Shield + road marker + safety signal. Premium, simple, app-icon friendly.</text>
+  </g>
+
+  <!-- Tokens -->
+  <g transform="translate(2600 110)">
+    <rect width="980" height="620" rx="40" class="card"/>
+    <text x="54" y="74" class="h2">Foundations</text>
+    <text x="54" y="112" class="body">Calm premium palette, high contrast, soft surfaces.</text>
+    <g transform="translate(58 160)">
+      <g><rect width="130" height="130" rx="24" fill="#075E63"/><text x="0" y="166" class="small">Brand 900</text></g>
+      <g transform="translate(155 0)"><rect width="130" height="130" rx="24" fill="#11858B"/><text x="0" y="166" class="small">Brand 700</text></g>
+      <g transform="translate(310 0)"><rect width="130" height="130" rx="24" fill="#24BFA3"/><text x="0" y="166" class="small">Mint 500</text></g>
+      <g transform="translate(465 0)"><rect width="130" height="130" rx="24" fill="#159BE8"/><text x="0" y="166" class="small">Info 500</text></g>
+      <g transform="translate(620 0)"><rect width="130" height="130" rx="24" fill="#F2C94C"/><text x="0" y="166" class="small">Warning</text></g>
+      <g transform="translate(775 0)"><rect width="130" height="130" rx="24" fill="#EF3E4A"/><text x="0" y="166" class="small">Danger</text></g>
+    </g>
+    <g transform="translate(58 390)">
+      <text class="label">Typography</text>
+      <text y="52" font-family="Inter, Arial" font-size="42" font-weight="900" fill="#07191C">Inter Display / 900</text>
+      <text y="100" font-family="Inter, Arial" font-size="24" font-weight="700" fill="#07191C">Inter UI / 700: buttons, tabs, active states</text>
+      <text y="140" font-family="Inter, Arial" font-size="20" font-weight="500" fill="#486066">Inter Body / 500: explanations, helper copy, descriptions</text>
+    </g>
+  </g>
+
+  <!-- Components -->
+  <g transform="translate(3690 110)">
+    <rect width="1390" height="620" rx="40" class="card"/>
+    <text x="54" y="74" class="h2">Core components</text>
+    <text x="54" y="112" class="body">Reusable pieces for production UI and Figma handoff.</text>
+    <g transform="translate(54 170)">
+      <rect width="220" height="64" rx="16" fill="url(#brand)"/>
+      <text x="52" y="41" font-family="Inter, Arial" font-size="20" font-weight="900" fill="#fff">Boshlash</text>
+      <rect x="250" width="220" height="64" rx="16" fill="#fff" stroke="#CFE0DD"/>
+      <text x="306" y="41" font-family="Inter, Arial" font-size="20" font-weight="900" fill="#075E63">Oldingi</text>
+      <rect x="500" width="220" height="64" rx="16" fill="#EFF6F5" stroke="#CFE0DD"/>
+      <text x="560" y="41" font-family="Inter, Arial" font-size="20" font-weight="900" fill="#71858A">Disabled</text>
+    </g>
+    <g transform="translate(54 285)">
+      <rect width="530" height="76" rx="18" fill="#fff" stroke="#D7E3E1"/>
+      <circle cx="36" cy="38" r="16" fill="#fff" stroke="#A7BBC0" stroke-width="3"/>
+      <text x="72" y="45" font-family="Inter, Arial" font-size="20" font-weight="700" fill="#07191C">Oddiy javob varianti</text>
+      <rect x="570" width="530" height="76" rx="18" fill="#27AA4A"/>
+      <text x="606" y="45" font-family="Inter, Arial" font-size="20" font-weight="800" fill="#fff">To'g'ri javob holati</text>
+      <rect y="98" width="530" height="76" rx="18" fill="#EF3E4A"/>
+      <text x="36" y="145" font-family="Inter, Arial" font-size="20" font-weight="800" fill="#fff">Xato javob holati</text>
+      <rect x="570" y="98" width="530" height="76" rx="18" fill="#FFF4F4" stroke="#EF3E4A"/>
+      <text x="606" y="134" font-family="Inter, Arial" font-size="18" font-weight="900" fill="#D63E46">Izoh paneli</text>
+      <text x="606" y="162" font-family="Inter, Arial" font-size="15" fill="#07191C">Javob belgilangandan keyin darhol chiqadi.</text>
+    </g>
+  </g>
+
+  <!-- Desktop Home Mockup -->
+  <g transform="translate(120 850)">
+    <text class="h1">Desktop home dashboard</text>
+    <rect y="70" width="1700" height="1060" rx="36" fill="#FFFFFF" filter="url(#softShadow)"/>
+    <rect y="70" width="280" height="1060" rx="36" fill="#0F2428"/>
+    <rect y="70" width="280" height="1060" rx="36" fill="#0F2428"/>
+    <g transform="translate(30 105)">
+      <rect width="52" height="52" rx="14" fill="url(#brand)"/>
+      <path d="M26 10 L43 18 V33 C43 44 34 50 26 53 C18 50 9 44 9 33 V18 Z" fill="#fff"/>
+      <text x="66" y="24" font-family="Inter, Arial" font-size="20" font-weight="900" fill="#fff">bek_avtotest</text>
+      <text x="66" y="46" font-family="Inter, Arial" font-size="12" font-weight="600" fill="#A9C3C5">Haydovchilar imtihoni</text>
+    </g>
+    <g transform="translate(24 205)" font-family="Inter, Arial" font-size="18" font-weight="800">
+      <rect width="232" height="52" rx="16" fill="#1D3B40"/><text x="58" y="34" fill="#fff">Asosiy</text>
+      <text x="58" y="104" fill="#D9E9EA">Belgilar</text>
+      <text x="58" y="174" fill="#D9E9EA">Qidirmoq</text>
+      <text x="58" y="244" fill="#D9E9EA">Sozlamalar</text>
+    </g>
+    <rect x="280" y="70" width="1420" height="84" rx="0" fill="#FFFFFF"/>
+    <text x="335" y="125" class="h2">Asosiy</text>
+    <rect x="1510" y="94" width="130" height="44" rx="12" fill="url(#brand)"/>
+    <text x="1543" y="123" font-family="Inter, Arial" font-size="16" font-weight="900" fill="#fff">Kirish</text>
+    <g transform="translate(350 210)">
+      <rect width="1240" height="180" rx="28" fill="#EAF6F4" stroke="#D2E5E2"/>
+      <text x="36" y="64" class="h2">Avtomaktab imtihoniga tayyorlanish</text>
+      <text x="36" y="105" class="body">Testlar, biletlar, mavzulashtirilgan mashqlar va xato savollar bitta joyda.</text>
+      <g transform="translate(930 42)">
+        <rect width="250" height="96" rx="24" fill="#fff"/>
+        <text x="28" y="40" font-family="Inter, Arial" font-size="34" font-weight="900" fill="#075E63">1235</text>
+        <text x="28" y="70" class="small">Savollar bazasi</text>
+      </g>
+    </g>
+    <g transform="translate(350 440)">
+      <g>
+        <rect width="1240" height="112" rx="22" class="surface"/>
+        <rect x="22" y="18" width="76" height="76" rx="20" fill="#E6F6F3"/>
+        <text x="124" y="49" class="h2">Imtihon Yangi 20</text>
+        <text x="124" y="82" class="body">20 savoldan iborat tezkor imtihon.</text>
+        <text x="1160" y="70" font-family="Inter, Arial" font-size="34" fill="#789096">›</text>
+      </g>
+      <g transform="translate(0 132)">
+        <rect width="1240" height="112" rx="22" class="surface"/>
+        <rect x="22" y="18" width="76" height="76" rx="20" fill="#EAF3FF"/>
+        <text x="124" y="49" class="h2">Imtihon Yangi 50</text>
+        <text x="124" y="82" class="body">Kengaytirilgan 50 savolli imtihon rejimi.</text>
+        <text x="1160" y="70" font-family="Inter, Arial" font-size="34" fill="#789096">›</text>
+      </g>
+      <g transform="translate(0 264)">
+        <rect width="1240" height="112" rx="22" class="surface"/>
+        <rect x="22" y="18" width="76" height="76" rx="20" fill="#FFF8DF"/>
+        <text x="124" y="49" class="h2">Mavzulashtirilgan testlar</text>
+        <text x="124" y="82" class="body">Belgilar, chorraha, tezlik va qoida mavzulari.</text>
+        <text x="1160" y="70" font-family="Inter, Arial" font-size="34" fill="#789096">›</text>
+      </g>
+      <g transform="translate(0 396)">
+        <rect width="1240" height="112" rx="22" class="surface"/>
+        <rect x="22" y="18" width="76" height="76" rx="20" fill="#FFECEE"/>
+        <text x="124" y="49" class="h2">Xato belgilagan savollarim</text>
+        <text x="124" y="82" class="body">Xatolarni qayta ishlash va mustahkamlash.</text>
+        <text x="1160" y="70" font-family="Inter, Arial" font-size="34" fill="#789096">›</text>
+      </g>
+    </g>
+  </g>
+
+  <!-- Desktop Quiz Mockup -->
+  <g transform="translate(1900 850)">
+    <text class="h1">Desktop quiz interface</text>
+    <rect y="70" width="1700" height="1060" rx="36" fill="#FFFFFF" filter="url(#softShadow)"/>
+    <g transform="translate(120 110)">
+      <circle cx="60" cy="60" r="55" fill="#fff" stroke="#43B982" stroke-width="10"/>
+      <text x="26" y="70" font-family="Inter, Arial" font-size="30" font-weight="600" fill="#07191C">24:09</text>
+      <g transform="translate(260 0)">
+        <rect width="32" height="32" rx="4" fill="#EAF2F1" stroke="#D0DFDC"/><text x="10" y="23" font-family="Inter" font-size="16">«</text>
+        <g transform="translate(33 0)">
+          <rect width="38" height="32" fill="#159BE8"/><text x="14" y="23" font-family="Inter" font-size="16" font-weight="800" fill="#fff">1</text>
+        </g>
+        <g transform="translate(72 0)">
+          <rect width="38" height="32" fill="#fff" stroke="#D0DFDC"/><text x="14" y="23" font-family="Inter" font-size="16">2</text>
+        </g>
+        <g transform="translate(111 0)">
+          <rect width="38" height="32" fill="#fff" stroke="#D0DFDC"/><text x="14" y="23" font-family="Inter" font-size="16">3</text>
+        </g>
+        <g transform="translate(150 0)">
+          <rect width="38" height="32" fill="#fff" stroke="#D0DFDC"/><text x="14" y="23" font-family="Inter" font-size="16">4</text>
+        </g>
+        <g transform="translate(189 0)">
+          <rect width="38" height="32" fill="#fff" stroke="#D0DFDC"/><text x="14" y="23" font-family="Inter" font-size="16">5</text>
+        </g>
+        <g transform="translate(228 0)">
+          <rect width="38" height="32" fill="#fff" stroke="#D0DFDC"/><text x="14" y="23" font-family="Inter" font-size="16">6</text>
+        </g>
+        <g transform="translate(267 0)">
+          <rect width="38" height="32" fill="#24B257"/><text x="14" y="23" font-family="Inter" font-size="16" font-weight="800" fill="#fff">7</text>
+        </g>
+        <g transform="translate(306 0)">
+          <rect width="38" height="32" fill="#EF3E4A"/><text x="14" y="23" font-family="Inter" font-size="16" font-weight="800" fill="#fff">8</text>
+        </g>
+      </g>
+      <rect x="1240" width="170" height="60" rx="14" fill="#ECEFED"/>
+      <text x="1280" y="26" font-family="Inter" font-size="16" font-weight="700" fill="#07191C">TESTNI</text>
+      <text x="1262" y="48" font-family="Inter" font-size="16" font-weight="700" fill="#07191C">YAKUNLASH</text>
+      <text x="0" y="220" class="h2">Yo'nalish bo'yicha harakatlanayotgan transport...</text>
+      <rect x="0" y="250" width="1410" height="120" rx="18" fill="#FFF4F4" stroke="#EF3E4A"/>
+      <text x="28" y="295" font-family="Inter" font-size="18" font-weight="900" fill="#D63E46">Xato javob.</text>
+      <text x="28" y="330" font-family="Inter" font-size="18" fill="#07191C">YHQ 1-ilovasi 3.27: izoh savol tanlangandan keyin shu joyda darhol chiqadi.</text>
+      <rect x="95" y="440" width="520" height="360" rx="22" fill="#DCE9E8"/>
+      <path d="M100 760 L560 470 L615 800 Z" fill="#B7D8D2"/>
+      <rect x="710" y="440" width="610" height="70" rx="16" fill="#EF3E4A"/><text x="738" y="484" font-family="Inter" font-size="20" fill="#fff">Belgilanagan xato javob</text>
+      <rect x="710" y="530" width="610" height="70" rx="16" fill="#fff" stroke="#D7E3E1"/><text x="738" y="574" font-family="Inter" font-size="20" fill="#07191C">Oddiy javob</text>
+      <rect x="710" y="620" width="610" height="70" rx="16" fill="#27AA4A"/><text x="738" y="664" font-family="Inter" font-size="20" fill="#fff">To'g'ri javob ko'rsatiladi</text>
+    </g>
+    <rect y="1030" width="1700" height="100" fill="#FFFFFF" opacity="0.96"/>
+    <line x1="0" y1="1030" x2="1700" y2="1030" class="line"/>
+    <rect x="120" y="1050" width="110" height="54" rx="14" fill="#fff" stroke="#D7E3E1"/><text x="146" y="1084" font-family="Inter" font-size="16" font-weight="900" fill="#78898E">Oldingi</text>
+    <text x="822" y="1082" font-family="Inter" font-size="18" font-weight="900" fill="#2577B8">1 / 20</text>
+    <rect x="1468" y="1050" width="112" height="54" rx="14" fill="#159BE8"/><text x="1493" y="1084" font-family="Inter" font-size="16" font-weight="900" fill="#fff">Keyingi</text>
+  </g>
+
+  <!-- Mobile Mockup -->
+  <g transform="translate(3720 850)">
+    <text class="h1">Mobile quiz mockup</text>
+    <rect x="0" y="70" width="430" height="920" rx="48" fill="#0B2226" filter="url(#softShadow)"/>
+    <rect x="18" y="92" width="394" height="876" rx="36" fill="#FFFFFF"/>
+    <g transform="translate(42 122)">
+      <circle cx="42" cy="42" r="38" fill="#fff" stroke="#43B982" stroke-width="7"/>
+      <text x="21" y="50" font-family="Inter" font-size="20" font-weight="600" fill="#07191C">19:10</text>
+      <g transform="translate(100 12)">
+        <rect width="36" height="32" fill="#159BE8"/><text x="14" y="22" font-family="Inter" font-size="15" font-weight="900" fill="#fff">1</text>
+        <rect x="36" width="36" height="32" fill="#fff" stroke="#D0DFDC"/><text x="50" y="22" font-family="Inter" font-size="15">2</text>
+        <rect x="72" width="36" height="32" fill="#fff" stroke="#D0DFDC"/><text x="86" y="22" font-family="Inter" font-size="15">3</text>
+        <rect x="108" width="36" height="32" fill="#fff" stroke="#D0DFDC"/><text x="122" y="22" font-family="Inter" font-size="15">4</text>
+      </g>
+      <rect y="94" width="346" height="48" rx="10" fill="#ECEFED"/>
+      <text x="143" y="116" font-family="Inter" font-size="15" font-weight="800" fill="#07191C">TESTNI</text>
+      <text x="123" y="137" font-family="Inter" font-size="15" font-weight="800" fill="#07191C">YAKUNLASH</text>
+      <text y="188" font-family="Inter" font-size="18" font-weight="900" fill="#6A7D83">Savol 1 / 20</text>
+      <text y="224" font-family="Inter" font-size="20" font-weight="700" fill="#07191C">Qaysi avtomobil uchun bu</text>
+      <text y="252" font-family="Inter" font-size="20" font-weight="700" fill="#07191C">belgilarning ta'sir oralig'ida?</text>
+      <rect y="276" width="346" height="150" rx="16" fill="#FFF4F4" stroke="#EF3E4A"/>
+      <text x="20" y="314" font-family="Inter" font-size="16" font-weight="900" fill="#D63E46">Xato javob.</text>
+      <text x="20" y="350" font-family="Inter" font-size="15" fill="#07191C">Izoh shu yerda ko'rinadi,</text>
+      <text x="20" y="374" font-family="Inter" font-size="15" fill="#07191C">foydalanuvchi scroll qilmasdan</text>
+      <text x="20" y="398" font-family="Inter" font-size="15" fill="#07191C">natijani tushunadi.</text>
+      <rect x="12" y="454" width="322" height="230" rx="12" fill="#DCE9E8"/>
+      <rect y="708" width="346" height="56" rx="14" fill="#EF3E4A"/><text x="22" y="743" font-family="Inter" font-size="16" font-weight="800" fill="#fff">Qizilga</text>
+      <rect y="780" width="346" height="56" rx="14" fill="#27AA4A"/><text x="22" y="815" font-family="Inter" font-size="16" font-weight="800" fill="#fff">To'g'ri javob</text>
+    </g>
+  </g>
+
+  <!-- Sign catalog Mockup -->
+  <g transform="translate(120 2090)">
+    <text class="h1">Belgilar katalogi</text>
+    <rect y="70" width="1700" height="880" rx="36" fill="#FFFFFF" filter="url(#softShadow)"/>
+    <rect y="70" width="280" height="880" rx="36" fill="#0F2428"/>
+    <text x="350" y="142" class="h1">Yo'l belgilari katalogi</text>
+    <text x="350" y="184" class="body">379 ta belgi, rasm, guruh va vazifasi bilan.</text>
+    <rect x="1110" y="118" width="430" height="56" rx="14" fill="#fff" stroke="#CFE0DD"/>
+    <text x="1138" y="154" class="body">Belgi kodi yoki guruh nomi</text>
+    <g transform="translate(350 220)">
+      <rect width="120" height="44" rx="12" fill="url(#brand)"/><text x="27" y="29" font-family="Inter" font-size="16" font-weight="900" fill="#fff">Hammasi</text>
+      <rect x="136" width="260" height="44" rx="12" fill="#fff" stroke="#CFE0DD"/><text x="158" y="29" font-family="Inter" font-size="16" font-weight="800" fill="#07191C">Ogohlantiruvchi - 91</text>
+      <rect x="414" width="230" height="44" rx="12" fill="#fff" stroke="#CFE0DD"/><text x="436" y="29" font-family="Inter" font-size="16" font-weight="800" fill="#07191C">Buyuruvchi - 24</text>
+    </g>
+    <g transform="translate(350 300)">
+      <g>
+        <rect width="170" height="190" rx="18" class="surface"/>
+        <path d="M85 28 L132 115 H38 Z" fill="#fff" stroke="#F01E2C" stroke-width="8"/>
+        <text x="52" y="145" font-family="Inter" font-size="18" font-weight="900" fill="#07191C">Belgi 1.1</text>
+        <text x="35" y="172" class="small">Temir yo'l kesishmasi</text>
+      </g>
+      <g transform="translate(196 0)">
+        <rect width="170" height="190" rx="18" class="surface"/>
+        <circle cx="85" cy="76" r="50" fill="#fff" stroke="#F01E2C" stroke-width="8"/>
+        <text x="52" y="145" font-family="Inter" font-size="18" font-weight="900" fill="#07191C">Belgi 3.1</text>
+        <text x="44" y="172" class="small">Kirish taqiqlanadi</text>
+      </g>
+      <g transform="translate(392 0)">
+        <rect width="170" height="190" rx="18" class="surface"/>
+        <circle cx="85" cy="76" r="50" fill="#159BE8"/>
+        <path d="M54 76 H116" stroke="#fff" stroke-width="10"/><path d="M88 44 L120 76 L88 108" fill="none" stroke="#fff" stroke-width="10"/>
+        <text x="52" y="145" font-family="Inter" font-size="18" font-weight="900" fill="#07191C">Belgi 4.1</text>
+        <text x="38" y="172" class="small">Harakat yo'nalishi</text>
+      </g>
+      <g transform="translate(588 0)">
+        <rect width="170" height="190" rx="18" class="surface"/>
+        <rect x="50" y="26" width="70" height="100" rx="8" fill="#fff" stroke="#555" stroke-width="4"/>
+        <path d="M58 112 L112 42" stroke="#F01E2C" stroke-width="12"/>
+        <text x="52" y="145" font-family="Inter" font-size="18" font-weight="900" fill="#07191C">Belgi 1.4</text>
+        <text x="45" y="172" class="small">Yaqinlashuv belgisi</text>
+      </g>
+    </g>
+  </g>
+
+  <!-- Handoff notes -->
+  <g transform="translate(1980 2090)">
+    <rect width="3100" height="880" rx="40" fill="#0F2428" filter="url(#softShadow)"/>
+    <text x="70" y="96" font-family="Inter, Arial" font-size="44" font-weight="900" fill="#fff">Figma handoff checklist</text>
+    <text x="70" y="156" font-family="Inter, Arial" font-size="22" font-weight="500" fill="#BFD5D7">Bu board Figma'ga import qilinadi va keyin frame/layerlar bo'yicha alohida tartiblanadi.</text>
+    <g font-family="Inter, Arial" font-size="28" font-weight="800" fill="#fff">
+      <text x="90" y="260">01  Logo: shield + road marker, app icon va wordmark.</text>
+      <text x="90" y="335">02  Colors: calm teal, mint success, blue action, red error, soft white surfaces.</text>
+      <text x="90" y="410">03  Quiz: immediate feedback, green correct, red wrong, explanation under question.</text>
+      <text x="90" y="485">04  Navigation: sticky Oldingi / Keyingi controls for desktop and mobile.</text>
+      <text x="90" y="560">05  Catalog: signs grid with search, group chips, sign task/description.</text>
+      <text x="90" y="635">06  Components: buttons, answer states, feedback panel, ticket row, mobile frame.</text>
+    </g>
+    <rect x="70" y="720" width="620" height="76" rx="20" fill="#F2C94C"/>
+    <text x="112" y="768" font-family="Inter, Arial" font-size="24" font-weight="900" fill="#0F2428">Premium foreign-standard UI direction</text>
+  </g>
+</svg>
