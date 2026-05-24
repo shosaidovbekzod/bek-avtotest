@@ -41,6 +41,7 @@ const loginBtn = document.querySelector("#loginBtn");
 const logoutBtn = document.querySelector("#logoutBtn");
 const adminBtn = document.querySelector("#adminBtn");
 const themeBtn = document.querySelector("#themeBtn");
+const toastHost = document.querySelector("#toastHost");
 const authDialog = document.querySelector("#authDialog");
 const authForm = document.querySelector("#authForm");
 const authTitle = document.querySelector("#authTitle");
@@ -67,16 +68,34 @@ function icon(name) {
   return `<svg viewBox="0 0 24 24" aria-hidden="true">${icons[name] || icons.grid}</svg>`;
 }
 
+function showToast(message, type = "info") {
+  if (!toastHost) return;
+  const toast = document.createElement("div");
+  toast.className = `toast ${type}`;
+  toast.textContent = message;
+  toastHost.append(toast);
+  window.setTimeout(() => toast.classList.add("show"), 20);
+  window.setTimeout(() => {
+    toast.classList.remove("show");
+    toast.addEventListener("transitionend", () => toast.remove(), { once: true });
+  }, 3200);
+}
+
 async function api(path, options = {}) {
+  document.body.classList.add("is-loading");
   const headers = { "Content-Type": "application/json", ...(options.headers || {}) };
-  if (state.token) headers.Authorization = `Bearer ${state.token}`;
-  const response = await fetch(path, { ...options, headers });
-  const text = await response.text();
-  const data = text ? JSON.parse(text) : null;
-  if (!response.ok) {
-    throw new Error(data?.detail || "So'rov bajarilmadi");
+  try {
+    if (state.token) headers.Authorization = `Bearer ${state.token}`;
+    const response = await fetch(path, { ...options, headers });
+    const text = await response.text();
+    const data = text ? JSON.parse(text) : null;
+    if (!response.ok) {
+      throw new Error(data?.detail || "So'rov bajarilmadi");
+    }
+    return data;
+  } finally {
+    document.body.classList.remove("is-loading");
   }
-  return data;
 }
 
 function setUser(token, user) {
@@ -85,6 +104,7 @@ function setUser(token, user) {
   localStorage.setItem("token", token);
   localStorage.setItem("user", JSON.stringify(user));
   updateAuthChrome();
+  showToast("Profilga muvaffaqiyatli kirildi", "success");
 }
 
 function clearUser() {
@@ -93,6 +113,7 @@ function clearUser() {
   localStorage.removeItem("token");
   localStorage.removeItem("user");
   updateAuthChrome();
+  showToast("Profil sessiyasi yopildi", "info");
 }
 
 function updateAuthChrome() {
@@ -113,7 +134,12 @@ function setView(nextView, nextTitle, renderer, push = true) {
   content.classList.toggle("exam-content", nextView === "quiz");
   backBtn.classList.toggle("hidden", state.stack.length === 0);
   renderNav();
-  renderer();
+  try {
+    renderer();
+  } catch (error) {
+    showToast(error.message || "Sahifani chizishda xatolik", "error");
+    throw error;
+  }
 }
 
 function goBack() {
@@ -256,14 +282,27 @@ async function loadHome() {
 
 function renderHome() {
   content.innerHTML = `
-    <div class="hero-strip">
+    <div class="premium-hero">
       <div>
-        <h2>Avtomaktab imtihoniga tayyorlanish</h2>
-        <p>Testlar, biletlar, mavzulashtirilgan mashqlar va xato savollar bitta joyda. Login orqali natijalar saqlanadi, admin panel orqali savollar boshqariladi.</p>
+        <span class="hero-kicker">bek_avtotest platformasi</span>
+        <h2>Haydovchilik imtihoniga premium tayyorgarlik</h2>
+        <p>${state.stats.questions || 1235}+ test, biletlar, yo'l belgilari, qidiruv va natijalarni kuzatish bitta zamonaviy tizimda jamlangan.</p>
+        <div class="hero-actions">
+          <button class="primary-button" data-category="new-20" type="button">20 talik testni boshlash</button>
+          <button class="secondary-button" data-nav="signs" type="button">Belgilar katalogi</button>
+        </div>
       </div>
       <div class="stat-panel">
-        <div class="stat-cell"><strong>${state.stats.questions || 0}</strong><span>Savollar</span></div>
-        <div class="stat-cell"><strong>${state.stats.tickets || 0}</strong><span>Biletlar</span></div>
+        <div class="stat-cell"><small>Savollar</small><strong>${state.stats.questions || 0}</strong><span>bazadagi testlar</span></div>
+        <div class="stat-cell"><small>Biletlar</small><strong>${state.stats.tickets || 0}</strong><span>20/50 format</span></div>
+        <div class="stat-cell"><small>Rejimlar</small><strong>${state.categories.length}</strong><span>faol bo'limlar</span></div>
+        <div class="stat-cell"><small>Belgilar</small><strong>379</strong><span>vazifalari bilan</span></div>
+      </div>
+    </div>
+    <div class="home-section-title">
+      <div>
+        <h3>Test modullari</h3>
+        <p>Tezkor imtihon, mavzular va xato savollar uchun tayyor bo'limlar.</p>
       </div>
     </div>
     <div class="menu-list">
@@ -311,6 +350,12 @@ async function openCategory(slug) {
 
 function renderTickets() {
   content.innerHTML = `
+    <div class="section-head tickets-head">
+      <div>
+        <h2>${escapeHtml(state.currentTicketCategory.title)}</h2>
+        <p>${state.tickets.length} ta bilet. Har bir bilet ichida testlar ketma-ket taqsimlangan.</p>
+      </div>
+    </div>
     <div class="ticket-grid">
       ${state.tickets
         .map(
@@ -407,7 +452,7 @@ function renderQuiz() {
       <div class="exam-toolbar">
         <div class="exam-timer" aria-label="Qolgan vaqt"><span data-quiz-timer>${formatTime(getRemainingSeconds())}</span></div>
         <div class="exam-numbers" aria-label="Savollar ro'yxati">
-          <button class="exam-step edge" data-action="prev" type="button" ${isFirstQuestion ? "disabled" : ""}>«</button>
+          <button class="exam-step edge" data-action="prev" type="button" ${isFirstQuestion ? "disabled" : ""} aria-label="Oldingi savol">&laquo;</button>
           ${state.currentQuestions
             .map((item, index) => {
               const status = answerStatus(item);
@@ -415,10 +460,11 @@ function renderQuiz() {
               return `<button class="exam-step ${status} ${active}" data-question-index="${index}" type="button">${index + 1}</button>`;
             })
             .join("")}
-          <button class="exam-step edge" data-action="next" type="button" ${isLastQuestion ? "disabled" : ""}>»</button>
+          <button class="exam-step edge" data-action="next" type="button" ${isLastQuestion ? "disabled" : ""} aria-label="Keyingi savol">&raquo;</button>
         </div>
         <button class="finish-exam" data-action="finish" type="button">TESTNI<br>YAKUNLASH</button>
       </div>
+      <div class="exam-meta-line">Savol ${state.currentIndex + 1} / ${state.currentQuestions.length}</div>
       <div class="exam-question-line">
         <span>Savol ${state.currentIndex + 1} / ${state.currentQuestions.length}</span>
         <h2>${escapeHtml(question.text)}</h2>
@@ -462,13 +508,13 @@ function renderQuiz() {
       </div>
       <div class="exam-bottom-actions" aria-label="Savollar bo'yicha harakatlanish">
         <button class="exam-nav-button secondary" data-action="prev" type="button" ${isFirstQuestion ? "disabled" : ""}>
-          <span aria-hidden="true">‹</span>
+          <span aria-hidden="true">&lsaquo;</span>
           Oldingi
         </button>
         <span class="exam-current-count">${state.currentIndex + 1} / ${state.currentQuestions.length}</span>
         <button class="exam-nav-button primary" data-action="next" type="button" ${isLastQuestion ? "disabled" : ""}>
           Keyingi
-          <span aria-hidden="true">›</span>
+          <span aria-hidden="true">&rsaquo;</span>
         </button>
       </div>
     </section>`;
@@ -820,6 +866,8 @@ document.addEventListener("click", async (event) => {
     const question = state.currentQuestions[state.currentIndex];
     if (state.selected.has(question.id)) return;
     state.selected.set(question.id, Number(answerId));
+    const status = answerStatus(question);
+    showToast(status === "correct" ? "To'g'ri javob" : "Xato javob, to'g'ri javob ko'rsatildi", status === "correct" ? "success" : "error");
     renderQuiz();
   }
 
@@ -845,6 +893,7 @@ document.addEventListener("click", async (event) => {
   if (action === "flag") {
     const question = state.currentQuestions[state.currentIndex];
     await api(`/api/flagged/${question.id}`, { method: "POST", body: "{}" });
+    showToast("Savol belgilanganlar ro'yxatiga yangilandi", "success");
   }
   if (action === "home") {
     state.stack = [];
@@ -872,6 +921,7 @@ document.addEventListener("click", async (event) => {
   const deleteQuestion = event.target.closest("[data-delete-question]")?.dataset.deleteQuestion;
   if (deleteQuestion) {
     await api(`/api/admin/questions/${deleteQuestion}`, { method: "DELETE" });
+    showToast("Savol o'chirildi", "success");
     await renderAdmin();
   }
 });
@@ -925,6 +975,11 @@ document.addEventListener("change", (event) => {
   }
 });
 
+window.addEventListener("unhandledrejection", (event) => {
+  const message = event.reason?.message || "Kutilmagan xatolik yuz berdi";
+  showToast(message, "error");
+});
+
 authForm.addEventListener("submit", async (event) => {
   event.preventDefault();
   authError.textContent = "";
@@ -941,6 +996,7 @@ authForm.addEventListener("submit", async (event) => {
     authForm.reset();
   } catch (error) {
     authError.textContent = error.message;
+    showToast(error.message, "error");
   }
 });
 
@@ -965,6 +1021,7 @@ content.addEventListener("submit", async (event) => {
       ticket_id: Number(data.get("ticket_id") || 0) || null,
     }),
   });
+  showToast("Savol qo'shildi", "success");
   await renderAdmin();
 });
 
@@ -989,4 +1046,5 @@ updateAuthChrome();
 renderNav();
 loadHome().catch((error) => {
   content.innerHTML = `<div class="empty-state"><div><h2>Xatolik</h2><p>${error.message}</p></div></div>`;
+  showToast(error.message, "error");
 });

@@ -88,6 +88,8 @@ def topics(db: Session = Depends(get_db)) -> dict:
 @router.get("/signs")
 def signs() -> dict:
     drawable_dir = ROOT_DIR / "res" / "drawable"
+    if not drawable_dir.exists():
+        return {"signs": [], "groups": []}
     details = load_sign_details(str(ROOT_DIR / "assets" / "qoida" / "qoida_uz.pdf"))
     rows = []
     for path in drawable_dir.iterdir():
@@ -203,8 +205,10 @@ def search_questions(q: str = "", limit: int = 50, db: Session = Depends(get_db)
 @router.post("/attempts")
 def submit_attempt(payload: SubmitAttemptIn, db: Session = Depends(get_db), user: User = Depends(current_user)) -> dict:
     answer_ids = [item.selected_answer_id for item in payload.answers if item.selected_answer_id]
+    question_ids = [item.question_id for item in payload.answers]
     answers = db.scalars(select(Answer).where(Answer.id.in_(answer_ids))).all() if answer_ids else []
     answer_map = {answer.id: answer for answer in answers}
+    valid_question_ids = set(db.scalars(select(Question.id).where(Question.id.in_(question_ids), Question.is_active.is_(True))).all())
     correct = 0
     attempt = Attempt(user_id=user.id, mode=payload.mode, ticket_id=payload.ticket_id, total=len(payload.answers), correct=0)
     db.add(attempt)
@@ -213,7 +217,11 @@ def submit_attempt(payload: SubmitAttemptIn, db: Session = Depends(get_db), user
     wrong = 0
     unanswered = 0
     for item in payload.answers:
+        if item.question_id not in valid_question_ids:
+            raise HTTPException(400, detail="Savol topilmadi yoki faol emas")
         selected = answer_map.get(item.selected_answer_id or 0)
+        if selected and selected.question_id != item.question_id:
+            raise HTTPException(400, detail="Javob savolga tegishli emas")
         is_unanswered = item.selected_answer_id is None
         is_correct = bool(selected and selected.is_correct)
         correct += int(is_correct)

@@ -29,19 +29,22 @@ def list_questions(db: Session = Depends(get_db)) -> list[dict]:
 
 @router.post("/questions")
 def create_question(payload: QuestionAdminIn, db: Session = Depends(get_db)) -> dict:
-    if payload.correct_index < 0 or payload.correct_index >= len(payload.answers):
+    answers = [answer.strip() for answer in payload.answers if answer.strip()]
+    if len(answers) < 2:
+        raise HTTPException(400, detail="Kamida 2 ta javob kiriting")
+    if payload.correct_index < 0 or payload.correct_index >= len(answers):
         raise HTTPException(400, detail="To'g'ri javob indeksi noto'g'ri")
     question = Question(
-        text=payload.text,
-        explanation=payload.explanation,
-        image=payload.image,
-        topic=payload.topic,
+        text=payload.text.strip(),
+        explanation=payload.explanation.strip() if payload.explanation else None,
+        image=payload.image.strip() if payload.image else None,
+        topic=payload.topic.strip() if payload.topic else None,
         category_id=payload.category_id,
         ticket_id=payload.ticket_id,
     )
     db.add(question)
     db.flush()
-    for index, answer_text in enumerate(payload.answers):
+    for index, answer_text in enumerate(answers):
         db.add(Answer(question_id=question.id, text=answer_text, is_correct=index == payload.correct_index, sort_order=index))
     db.commit()
     db.refresh(question)

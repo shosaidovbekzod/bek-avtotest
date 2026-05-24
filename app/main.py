@@ -1,5 +1,5 @@
 from pathlib import Path
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 
@@ -39,5 +39,5 @@ def index() -> FileResponse:
 @app.get("/{path:path}")
 def spa_fallback(path: str) -> FileResponse:
     if path.startswith("api/"):
-        raise RuntimeError("API route not found")
+        raise HTTPException(status_code=404, detail="API route not found")
     return FileResponse(Path(ROOT_DIR / "static" / "index.html"))
