@@ -519,7 +519,21 @@ function renderQuiz() {
       </div>
     </section>`;
   ensureQuizTimer();
-  document.querySelector(".exam-step.active")?.scrollIntoView({ inline: "center", block: "nearest" });
+  syncQuestionStepper();
+}
+
+function syncQuestionStepper() {
+  const stepper = document.querySelector(".exam-numbers");
+  const active = document.querySelector(".exam-step.active");
+  if (!stepper || !active) return;
+  requestAnimationFrame(() => {
+    if (state.currentIndex === 0) {
+      stepper.scrollLeft = 0;
+      return;
+    }
+    const target = active.offsetLeft - stepper.clientWidth / 2 + active.clientWidth / 2;
+    stepper.scrollTo({ left: Math.max(0, target), behavior: "smooth" });
+  });
 }
 
 async function finishQuiz() {
