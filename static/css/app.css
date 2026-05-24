@@ -1517,41 +1517,44 @@ body.is-loading::before {
 /* Liquid Glass mode */
 body.liquid-glass {
   color-scheme: dark;
-  --accent: #38e8ff;
-  --accent-strong: #0bbbd3;
-  --premium: #5eead4;
+  --accent: #b8f7ff;
+  --accent-strong: #65d8ff;
+  --premium: #ffc7f2;
   --danger: #fb7185;
   --ok: #34d399;
-  --bg: #06111d;
-  --surface: rgba(255, 255, 255, 0.13);
-  --surface-2: rgba(255, 255, 255, 0.09);
-  --text: #f8fbff;
-  --muted: #bad2e5;
-  --line: rgba(203, 241, 255, 0.24);
-  --nav: rgba(4, 15, 27, 0.58);
-  --nav-active: rgba(34, 211, 238, 0.22);
-  --shadow: 0 24px 70px rgba(0, 0, 0, 0.34);
+  --bg: #132f42;
+  --surface: rgba(255, 255, 255, 0.16);
+  --surface-2: rgba(255, 255, 255, 0.1);
+  --text: #f8fdff;
+  --muted: #c7dceb;
+  --line: rgba(236, 253, 255, 0.38);
+  --nav: rgba(4, 22, 34, 0.5);
+  --nav-active: rgba(255, 255, 255, 0.19);
+  --shadow: 0 30px 90px rgba(4, 21, 34, 0.42);
   background:
-    radial-gradient(circle at 16% 12%, rgba(56, 232, 255, 0.32), transparent 28%),
-    radial-gradient(circle at 76% 8%, rgba(94, 234, 212, 0.24), transparent 24%),
-    radial-gradient(circle at 48% 90%, rgba(14, 165, 233, 0.25), transparent 30%),
-    linear-gradient(135deg, #02131f 0%, #063347 46%, #04505a 100%);
-  background-size: 180% 180%;
-  animation: liquid-mesh 22s ease-in-out infinite alternate;
+    radial-gradient(circle at 18% 10%, rgba(197, 244, 255, 0.3), transparent 24%),
+    radial-gradient(circle at 74% 8%, rgba(255, 199, 242, 0.22), transparent 24%),
+    radial-gradient(circle at 44% 84%, rgba(56, 189, 248, 0.24), transparent 34%),
+    linear-gradient(135deg, #10283a 0%, #365f73 42%, #12364d 100%);
+  background-size: 220% 220%;
+  animation: liquid-mesh 24s ease-in-out infinite alternate;
 }
 
 body.liquid-glass::after {
   content: "";
   position: fixed;
   inset: 0;
-  z-index: -1;
+  z-index: 0;
   pointer-events: none;
   background:
-    linear-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.045) 1px, transparent 1px),
-    repeating-radial-gradient(circle at 78% 24%, rgba(125, 249, 255, 0.15) 0 1px, transparent 1px 12px);
-  background-size: 64px 64px, 64px 64px, 18px 18px;
-  mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.95), transparent 82%);
+    radial-gradient(ellipse at 18% 20%, transparent 0 36%, rgba(255, 218, 248, 0.4) 36.4% 36.9%, transparent 38%),
+    radial-gradient(ellipse at 42% 38%, transparent 0 42%, rgba(211, 250, 255, 0.32) 42.3% 42.9%, transparent 44%),
+    radial-gradient(ellipse at 78% 24%, transparent 0 38%, rgba(255, 230, 252, 0.34) 38.4% 39%, transparent 40%),
+    radial-gradient(ellipse at 58% 72%, transparent 0 46%, rgba(186, 246, 255, 0.28) 46.4% 47%, transparent 48%);
+  filter: blur(0.45px) drop-shadow(0 0 10px rgba(255, 215, 248, 0.5));
+  mix-blend-mode: screen;
+  opacity: 0.66;
+  animation: caustic-float 13s ease-in-out infinite alternate;
 }
 
 @keyframes liquid-mesh {
@@ -1589,18 +1592,25 @@ body.liquid-glass .admin-form input,
 body.liquid-glass .admin-form textarea,
 body.liquid-glass .admin-form select,
 body.liquid-glass .modal-card input {
-  border-color: rgba(214, 251, 255, 0.22);
-  background: linear-gradient(145deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0.07));
+  position: relative;
+  overflow: hidden;
+  border-color: rgba(236, 253, 255, 0.38);
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.28), rgba(255, 255, 255, 0.08) 48%, rgba(255, 255, 255, 0.16)),
+    rgba(13, 50, 67, 0.22);
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.22),
-    0 22px 58px rgba(0, 0, 0, 0.28);
-  backdrop-filter: blur(22px) saturate(150%);
+    inset 0 1px 0 rgba(255, 255, 255, 0.52),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.12),
+    0 22px 62px rgba(4, 20, 34, 0.34),
+    0 0 0 1px rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(30px) saturate(170%) brightness(1.06);
 }
 
 body.liquid-glass .sidebar {
   background:
-    radial-gradient(circle at 45% 0%, rgba(34, 211, 238, 0.18), transparent 38%),
-    linear-gradient(180deg, rgba(2, 10, 22, 0.7), rgba(5, 21, 35, 0.48));
+    radial-gradient(circle at 46% 0%, rgba(202, 244, 255, 0.24), transparent 40%),
+    radial-gradient(circle at 78% 64%, rgba(255, 199, 242, 0.12), transparent 34%),
+    linear-gradient(180deg, rgba(5, 28, 43, 0.62), rgba(7, 24, 35, 0.38));
 }
 
 body.liquid-glass .topbar {
@@ -1609,9 +1619,9 @@ body.liquid-glass .topbar {
 
 body.liquid-glass .premium-hero {
   background:
-    radial-gradient(circle at 88% 22%, rgba(34, 211, 238, 0.22), transparent 28%),
-    radial-gradient(circle at 14% 8%, rgba(52, 211, 153, 0.12), transparent 20%),
-    linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.06));
+    radial-gradient(circle at 88% 22%, rgba(184, 247, 255, 0.24), transparent 28%),
+    radial-gradient(circle at 12% 10%, rgba(255, 199, 242, 0.13), transparent 22%),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.28), rgba(255, 255, 255, 0.08));
 }
 
 body.liquid-glass .premium-hero::after {
@@ -1644,9 +1654,41 @@ body.liquid-glass .primary-button,
 body.liquid-glass .exam-nav-button.primary,
 body.liquid-glass .filter-chip.active,
 body.liquid-glass .nav-item.active {
-  background: linear-gradient(135deg, rgba(34, 211, 238, 0.95), rgba(16, 185, 129, 0.9));
-  color: #03141c;
-  box-shadow: 0 18px 38px rgba(34, 211, 238, 0.24);
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(245, 253, 255, 0.48);
+  border-radius: 999px;
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.36), rgba(184, 247, 255, 0.18) 48%, rgba(255, 199, 242, 0.2)),
+    rgba(19, 77, 96, 0.32);
+  color: #f8fdff;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.62),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.16),
+    0 18px 46px rgba(101, 216, 255, 0.22),
+    0 0 32px rgba(255, 199, 242, 0.14);
+  text-shadow: 0 1px 8px rgba(5, 24, 38, 0.42);
+}
+
+body.liquid-glass .primary-button::before,
+body.liquid-glass .exam-nav-button.primary::before,
+body.liquid-glass .filter-chip.active::before,
+body.liquid-glass .nav-item.active::before,
+body.liquid-glass .secondary-button::before,
+body.liquid-glass .ghost-button::before,
+body.liquid-glass .text-button::before,
+body.liquid-glass .top-icon::before,
+body.liquid-glass .icon-button::before {
+  content: "";
+  position: absolute;
+  inset: 1px;
+  border-radius: inherit;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 22% 16%, rgba(255, 255, 255, 0.82), transparent 18%),
+    linear-gradient(115deg, transparent 0 38%, rgba(255, 255, 255, 0.2) 44%, transparent 52%);
+  opacity: 0.48;
+  mix-blend-mode: screen;
 }
 
 body.liquid-glass .secondary-button,
@@ -1654,9 +1696,45 @@ body.liquid-glass .ghost-button,
 body.liquid-glass .text-button,
 body.liquid-glass .top-icon,
 body.liquid-glass .icon-button {
+  position: relative;
+  overflow: hidden;
   color: var(--text);
-  background: rgba(255, 255, 255, 0.12);
-  border-color: rgba(214, 251, 255, 0.22);
+  border: 1px solid rgba(245, 253, 255, 0.42);
+  border-radius: 999px;
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.26), rgba(255, 255, 255, 0.08)),
+    rgba(15, 58, 76, 0.22);
+  border-color: rgba(236, 253, 255, 0.34);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.5),
+    0 14px 36px rgba(4, 20, 34, 0.28);
+}
+
+body.liquid-glass .sidebar::before,
+body.liquid-glass .topbar::before,
+body.liquid-glass .menu-row::before,
+body.liquid-glass .ticket-card::before,
+body.liquid-glass .quiz-card::before,
+body.liquid-glass .admin-panel::before,
+body.liquid-glass .empty-state::before,
+body.liquid-glass .sign-card::before,
+body.liquid-glass .topic-card::before,
+body.liquid-glass .fine-card::before,
+body.liquid-glass .settings-row::before,
+body.liquid-glass .result-row::before,
+body.liquid-glass .modal-card::before,
+body.liquid-glass .stat-cell::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 18% 12%, rgba(255, 255, 255, 0.28), transparent 18%),
+    radial-gradient(circle at 86% 18%, rgba(255, 213, 248, 0.16), transparent 26%),
+    linear-gradient(130deg, rgba(255, 255, 255, 0.18), transparent 34% 68%, rgba(184, 247, 255, 0.12));
+  opacity: 0.62;
+  mix-blend-mode: screen;
 }
 
 body.liquid-glass .menu-row img {
@@ -1741,40 +1819,53 @@ body.liquid-glass .toast {
 
 body.liquid-glass .liquid-water {
   position: fixed;
-  inset: -18%;
+  inset: -14%;
   z-index: 0;
   display: block;
   pointer-events: none;
   overflow: hidden;
   background:
-    radial-gradient(ellipse at 24% 26%, rgba(125, 249, 255, 0.32), transparent 33%),
-    radial-gradient(ellipse at 78% 18%, rgba(20, 184, 166, 0.24), transparent 30%),
-    radial-gradient(ellipse at 46% 84%, rgba(56, 189, 248, 0.2), transparent 36%),
-    linear-gradient(125deg, rgba(1, 21, 35, 0.8), rgba(5, 90, 106, 0.44));
-  filter: saturate(1.35);
-  animation: water-sway 18s ease-in-out infinite alternate;
+    radial-gradient(circle at 14% 18%, rgba(197, 244, 255, 0.32), transparent 24%),
+    radial-gradient(circle at 76% 12%, rgba(255, 199, 242, 0.18), transparent 26%),
+    radial-gradient(circle at 50% 82%, rgba(75, 204, 230, 0.26), transparent 34%),
+    linear-gradient(132deg, rgba(8, 34, 52, 0.95), rgba(67, 105, 121, 0.74) 48%, rgba(12, 48, 70, 0.92));
+  filter: saturate(1.42) contrast(1.05);
+  animation: water-surface-drift 19s ease-in-out infinite alternate;
 }
 
 body.liquid-glass .liquid-water::before,
 body.liquid-glass .liquid-water::after {
   content: "";
   position: absolute;
-  inset: -20%;
-  background:
-    repeating-radial-gradient(ellipse at 50% 50%, rgba(226, 255, 255, 0.18) 0 1px, transparent 2px 20px),
-    repeating-linear-gradient(115deg, rgba(224, 255, 255, 0.1) 0 1px, transparent 1px 24px);
-  opacity: 0.44;
-  filter: blur(0.3px);
+  inset: -18%;
   transform-origin: 50% 50%;
-  animation: water-ripple 11s ease-in-out infinite;
+  pointer-events: none;
+  mix-blend-mode: screen;
+}
+
+body.liquid-glass .liquid-water::before {
+  background:
+    radial-gradient(ellipse at 8% 18%, transparent 0 39%, rgba(255, 224, 249, 0.76) 39.4% 40%, transparent 41%),
+    radial-gradient(ellipse at 24% 42%, transparent 0 43%, rgba(218, 251, 255, 0.58) 43.35% 43.95%, transparent 45%),
+    radial-gradient(ellipse at 46% 20%, transparent 0 34%, rgba(255, 231, 252, 0.68) 34.35% 34.95%, transparent 36%),
+    radial-gradient(ellipse at 67% 44%, transparent 0 48%, rgba(212, 250, 255, 0.54) 48.3% 49%, transparent 50%),
+    radial-gradient(ellipse at 88% 22%, transparent 0 36%, rgba(255, 224, 249, 0.58) 36.35% 36.95%, transparent 38%),
+    radial-gradient(ellipse at 82% 72%, transparent 0 43%, rgba(210, 250, 255, 0.48) 43.3% 43.85%, transparent 45%),
+    radial-gradient(ellipse at 38% 76%, transparent 0 46%, rgba(255, 224, 249, 0.5) 46.35% 46.9%, transparent 48%),
+    linear-gradient(118deg, transparent 0 17%, rgba(255, 235, 252, 0.2) 17.45%, transparent 18.1% 47%, rgba(198, 248, 255, 0.2) 47.45%, transparent 48.1%);
+  opacity: 0.68;
+  filter: blur(0.25px) drop-shadow(0 0 7px rgba(255, 219, 249, 0.62));
+  animation: caustic-swim 10.5s ease-in-out infinite alternate;
 }
 
 body.liquid-glass .liquid-water::after {
-  opacity: 0.28;
   background:
-    repeating-radial-gradient(ellipse at 45% 58%, rgba(103, 232, 249, 0.18) 0 1px, transparent 2px 28px),
-    linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.08), transparent);
-  animation: water-ripple-alt 15s ease-in-out infinite reverse;
+    linear-gradient(68deg, transparent 0 12%, rgba(255, 226, 249, 0.28) 12.35%, transparent 13% 38%, rgba(204, 249, 255, 0.24) 38.35%, transparent 39.2%),
+    linear-gradient(136deg, transparent 0 22%, rgba(255, 255, 255, 0.16) 22.35%, transparent 23.1% 63%, rgba(255, 217, 248, 0.2) 63.35%, transparent 64.2%),
+    repeating-radial-gradient(ellipse at 50% 50%, rgba(255, 255, 255, 0.08) 0 1px, transparent 2px 50px);
+  opacity: 0.36;
+  filter: blur(0.55px);
+  animation: caustic-slide 15s ease-in-out infinite reverse;
 }
 
 body.liquid-glass .app-shell,
@@ -1796,6 +1887,56 @@ body.liquid-glass .modal {
   100% {
     transform: translate3d(-1%, 2%, 0) scale(1.04) rotate(-0.4deg);
     filter: hue-rotate(-5deg) saturate(1.35);
+  }
+}
+
+@keyframes water-surface-drift {
+  0% {
+    transform: translate3d(-1.5%, -1%, 0) scale(1.04) rotate(-0.8deg);
+    filter: hue-rotate(-4deg) saturate(1.32) contrast(1.04);
+  }
+  42% {
+    transform: translate3d(1.2%, 1.4%, 0) scale(1.075) rotate(0.7deg);
+    filter: hue-rotate(6deg) saturate(1.48) contrast(1.09);
+  }
+  100% {
+    transform: translate3d(-0.5%, 2%, 0) scale(1.045) rotate(-0.3deg);
+    filter: hue-rotate(-2deg) saturate(1.38) contrast(1.06);
+  }
+}
+
+@keyframes caustic-swim {
+  0% {
+    transform: translate3d(-2%, -1%, 0) scale(1.03) rotate(-2deg);
+    background-position: 0% 35%;
+  }
+  50% {
+    transform: translate3d(2%, 1.2%, 0) scale(1.08) rotate(1.4deg);
+    background-position: 52% 58%;
+  }
+  100% {
+    transform: translate3d(-1%, 2.4%, 0) scale(1.05) rotate(-0.8deg);
+    background-position: 100% 42%;
+  }
+}
+
+@keyframes caustic-slide {
+  0% {
+    transform: translate3d(2%, -2%, 0) scale(1.06) rotate(3deg);
+  }
+  100% {
+    transform: translate3d(-3%, 2%, 0) scale(1.12) rotate(-2deg);
+  }
+}
+
+@keyframes caustic-float {
+  0% {
+    transform: translate3d(-1%, -1%, 0) scale(1.02);
+    opacity: 0.56;
+  }
+  100% {
+    transform: translate3d(1.5%, 1.8%, 0) scale(1.07);
+    opacity: 0.82;
   }
 }
 
@@ -1824,7 +1965,8 @@ body.liquid-glass .modal {
   body.liquid-glass,
   body.liquid-glass .liquid-water,
   body.liquid-glass .liquid-water::before,
-  body.liquid-glass .liquid-water::after {
+  body.liquid-glass .liquid-water::after,
+  body.liquid-glass::after {
     animation: none;
   }
 }
