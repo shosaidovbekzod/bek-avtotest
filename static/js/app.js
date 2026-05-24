@@ -1,3 +1,13 @@
+const defaultSettings = { textSize: "normal", compact: false, sound: false };
+
+function readSettings() {
+  try {
+    return { ...defaultSettings, ...JSON.parse(localStorage.getItem("appSettings") || "{}") };
+  } catch {
+    return { ...defaultSettings };
+  }
+}
+
 const state = {
   token: localStorage.getItem("token"),
   user: JSON.parse(localStorage.getItem("user") || "null"),
@@ -28,9 +38,15 @@ const state = {
   searchResults: [],
   fineQuery: "",
   bhmValue: Number(localStorage.getItem("bhmValue") || 412000),
-  settings: JSON.parse(localStorage.getItem("appSettings") || '{"textSize":"normal","compact":false}'),
+  settings: readSettings(),
   theme: localStorage.getItem("theme") || "light",
   authMode: "login",
+};
+
+const audioState = {
+  ctx: null,
+  master: null,
+  water: null,
 };
 
 const content = document.querySelector("#content");
@@ -250,7 +266,141 @@ function answerStatus(question) {
 function applySettings() {
   document.body.classList.toggle("large-text", state.settings.textSize === "large");
   document.body.classList.toggle("compact-mode", Boolean(state.settings.compact));
+  document.body.classList.toggle("sound-on", Boolean(state.settings.sound));
   localStorage.setItem("appSettings", JSON.stringify(state.settings));
+  updateAudioEnvironment();
+}
+
+function getAudioContext() {
+  const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+  if (!AudioContextClass) return null;
+  if (!audioState.ctx) {
+    audioState.ctx = new AudioContextClass();
+    audioState.master = audioState.ctx.createGain();
+    audioState.master.gain.value = 0.42;
+    audioState.master.connect(audioState.ctx.destination);
+  }
+  return audioState.ctx;
+}
+
+function stopWaterAmbience() {
+  if (!audioState.water) return;
+  audioState.water.nodes.forEach((node) => {
+    try {
+      node.stop?.();
+    } catch {
+      // Already stopped by the browser audio graph.
+    }
+    try {
+      node.disconnect?.();
+    } catch {
+      // Detached nodes are harmless.
+    }
+  });
+  audioState.water = null;
+}
+
+function startWaterAmbience() {
+  if (!state.settings.sound || state.theme !== "glass" || audioState.water) return;
+  const ctx = getAudioContext();
+  if (!ctx || !audioState.master) return;
+  if (ctx.state === "suspended") ctx.resume().catch(() => {});
+
+  const bufferLength = ctx.sampleRate * 3;
+  const buffer = ctx.createBuffer(1, bufferLength, ctx.sampleRate);
+  const data = buffer.getChannelData(0);
+  let last = 0;
+  for (let index = 0; index < bufferLength; index += 1) {
+    last = last * 0.985 + (Math.random() * 2 - 1) * 0.015;
+    data[index] = last * 0.85;
+  }
+
+  const source = ctx.createBufferSource();
+  source.buffer = buffer;
+  source.loop = true;
+
+  const filter = ctx.createBiquadFilter();
+  filter.type = "lowpass";
+  filter.frequency.value = 720;
+  filter.Q.value = 0.7;
+
+  const ambienceGain = ctx.createGain();
+  ambienceGain.gain.value = 0.026;
+
+  const lfo = ctx.createOscillator();
+  lfo.type = "sine";
+  lfo.frequency.value = 0.075;
+
+  const lfoGain = ctx.createGain();
+  lfoGain.gain.value = 0.016;
+
+  const shimmer = ctx.createOscillator();
+  shimmer.type = "sine";
+  shimmer.frequency.value = 185;
+
+  const shimmerGain = ctx.createGain();
+  shimmerGain.gain.value = 0.004;
+
+  source.connect(filter);
+  filter.connect(ambienceGain);
+  ambienceGain.connect(audioState.master);
+  lfo.connect(lfoGain);
+  lfoGain.connect(ambienceGain.gain);
+  shimmer.connect(shimmerGain);
+  shimmerGain.connect(audioState.master);
+
+  source.start();
+  lfo.start();
+  shimmer.start();
+  audioState.water = { nodes: [source, filter, ambienceGain, lfo, lfoGain, shimmer, shimmerGain] };
+}
+
+function updateAudioEnvironment() {
+  if (state.settings.sound && state.theme === "glass" && audioState.ctx) startWaterAmbience();
+  else stopWaterAmbience();
+}
+
+function playUiSound(kind = "click") {
+  if (!state.settings.sound) return;
+  const ctx = getAudioContext();
+  if (!ctx || !audioState.master) return;
+  if (ctx.state === "suspended") ctx.resume().catch(() => {});
+
+  const now = ctx.currentTime;
+  const osc = ctx.createOscillator();
+  const gain = ctx.createGain();
+  const filter = ctx.createBiquadFilter();
+  const isPrimary = kind === "primary";
+  const isError = kind === "error";
+
+  osc.type = "sine";
+  osc.frequency.setValueAtTime(isError ? 180 : isPrimary ? 520 : 360, now);
+  osc.frequency.exponentialRampToValueAtTime(isError ? 120 : isPrimary ? 720 : 460, now + 0.11);
+  filter.type = "lowpass";
+  filter.frequency.value = isPrimary ? 1800 : 1300;
+  gain.gain.setValueAtTime(0.0001, now);
+  gain.gain.exponentialRampToValueAtTime(isPrimary ? 0.055 : 0.035, now + 0.012);
+  gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.16);
+
+  osc.connect(filter);
+  filter.connect(gain);
+  gain.connect(audioState.master);
+  osc.start(now);
+  osc.stop(now + 0.18);
+}
+
+function handleSoundToggle(enabled) {
+  state.settings.sound = enabled;
+  applySettings();
+  if (enabled) {
+    getAudioContext()?.resume?.().catch(() => {});
+    playUiSound("primary");
+    startWaterAmbience();
+    showToast("Ovoz yoqildi", "success");
+  } else {
+    stopWaterAmbience();
+    showToast("Ovoz o'chirildi", "info");
+  }
 }
 
 function themeLabel(mode = state.theme) {
@@ -268,6 +418,7 @@ function applyTheme(mode = state.theme) {
   themeBtn?.setAttribute("aria-label", `Rang rejimi: ${themeLabel()}`);
   const icon = themeBtn?.querySelector(".sun-icon");
   if (icon) icon.dataset.mode = state.theme;
+  updateAudioEnvironment();
 }
 
 function cycleTheme() {
@@ -786,6 +937,10 @@ function renderSettings() {
             <span><strong>Zich rejim</strong><small>Bilet va kataloglarda ixcham ko'rinish</small></span>
             <input data-setting="compact" type="checkbox" ${state.settings.compact ? "checked" : ""} />
           </label>
+          <label class="settings-row sound-row">
+            <span><strong>Ovoz effektlari</strong><small>Knopka bosilganda yumshoq signal, Liquid Glass rejimida suv shildirashi.</small></span>
+            <input data-setting="sound" type="checkbox" ${state.settings.sound ? "checked" : ""} />
+          </label>
           <div class="settings-row">
             <span><strong>Rang rejimi</strong><small>Hozir: ${themeLabel()}. Light, Dark va Liquid Glass mavjud.</small></span>
             <button class="secondary-button" data-action="toggle-theme" type="button">${themeLabel()} rejimini almashtirish</button>
@@ -847,6 +1002,14 @@ function openAuth(mode = "login") {
   fullNameWrap.classList.toggle("hidden", !isRegister);
   authDialog.showModal();
 }
+
+document.addEventListener("pointerdown", (event) => {
+  const button = event.target.closest("button");
+  if (!button || button.disabled) return;
+  const kind = button.matches(".primary-button, .exam-nav-button.primary, .nav-item.active") ? "primary" : "click";
+  playUiSound(kind);
+  updateAudioEnvironment();
+});
 
 document.addEventListener("click", async (event) => {
   const nav = event.target.closest("[data-nav]")?.dataset.nav;
@@ -999,6 +1162,11 @@ document.addEventListener("change", (event) => {
   const setting = event.target.closest("[data-setting]");
   if (setting) {
     const key = setting.dataset.setting;
+    if (key === "sound") {
+      handleSoundToggle(setting.checked);
+      renderSettings();
+      return;
+    }
     state.settings[key] = setting.type === "checkbox" ? setting.checked : setting.value;
     applySettings();
     renderSettings();

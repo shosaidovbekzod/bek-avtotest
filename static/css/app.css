@@ -1147,6 +1147,11 @@ body.exam-mode .bottom-nav {
   accent-color: var(--accent);
 }
 
+body.sound-on .sound-row {
+  border-color: color-mix(in srgb, var(--accent) 34%, var(--line));
+  box-shadow: 0 14px 34px color-mix(in srgb, var(--accent) 14%, transparent);
+}
+
 body.large-text .question-text {
   font-size: 29px;
 }
@@ -1512,9 +1517,9 @@ body.is-loading::before {
 /* Liquid Glass mode */
 body.liquid-glass {
   color-scheme: dark;
-  --accent: #22d3ee;
-  --accent-strong: #0ea5e9;
-  --premium: #34d399;
+  --accent: #38e8ff;
+  --accent-strong: #0bbbd3;
+  --premium: #5eead4;
   --danger: #fb7185;
   --ok: #34d399;
   --bg: #06111d;
@@ -1527,12 +1532,12 @@ body.liquid-glass {
   --nav-active: rgba(34, 211, 238, 0.22);
   --shadow: 0 24px 70px rgba(0, 0, 0, 0.34);
   background:
-    radial-gradient(circle at 16% 12%, rgba(34, 211, 238, 0.28), transparent 28%),
-    radial-gradient(circle at 76% 8%, rgba(16, 185, 129, 0.2), transparent 24%),
-    radial-gradient(circle at 48% 90%, rgba(59, 130, 246, 0.22), transparent 30%),
-    linear-gradient(135deg, #020617 0%, #071827 46%, #052f35 100%);
-  background-size: 140% 140%;
-  animation: liquid-mesh 16s ease-in-out infinite alternate;
+    radial-gradient(circle at 16% 12%, rgba(56, 232, 255, 0.32), transparent 28%),
+    radial-gradient(circle at 76% 8%, rgba(94, 234, 212, 0.24), transparent 24%),
+    radial-gradient(circle at 48% 90%, rgba(14, 165, 233, 0.25), transparent 30%),
+    linear-gradient(135deg, #02131f 0%, #063347 46%, #04505a 100%);
+  background-size: 180% 180%;
+  animation: liquid-mesh 22s ease-in-out infinite alternate;
 }
 
 body.liquid-glass::after {
@@ -1551,10 +1556,13 @@ body.liquid-glass::after {
 
 @keyframes liquid-mesh {
   0% {
-    background-position: 0% 35%;
+    background-position: 0% 38%;
+  }
+  50% {
+    background-position: 55% 62%;
   }
   100% {
-    background-position: 100% 65%;
+    background-position: 100% 42%;
   }
 }
 
@@ -1725,6 +1733,100 @@ body.liquid-glass .toast {
 .sun-icon[data-mode="glass"] {
   background: linear-gradient(135deg, rgba(34, 211, 238, 0.95), rgba(255, 255, 255, 0.55));
   box-shadow: 0 0 18px rgba(34, 211, 238, 0.65), 0 0 0 6px rgba(34, 211, 238, 0.14);
+}
+
+.liquid-water {
+  display: none;
+}
+
+body.liquid-glass .liquid-water {
+  position: fixed;
+  inset: -18%;
+  z-index: 0;
+  display: block;
+  pointer-events: none;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse at 24% 26%, rgba(125, 249, 255, 0.32), transparent 33%),
+    radial-gradient(ellipse at 78% 18%, rgba(20, 184, 166, 0.24), transparent 30%),
+    radial-gradient(ellipse at 46% 84%, rgba(56, 189, 248, 0.2), transparent 36%),
+    linear-gradient(125deg, rgba(1, 21, 35, 0.8), rgba(5, 90, 106, 0.44));
+  filter: saturate(1.35);
+  animation: water-sway 18s ease-in-out infinite alternate;
+}
+
+body.liquid-glass .liquid-water::before,
+body.liquid-glass .liquid-water::after {
+  content: "";
+  position: absolute;
+  inset: -20%;
+  background:
+    repeating-radial-gradient(ellipse at 50% 50%, rgba(226, 255, 255, 0.18) 0 1px, transparent 2px 20px),
+    repeating-linear-gradient(115deg, rgba(224, 255, 255, 0.1) 0 1px, transparent 1px 24px);
+  opacity: 0.44;
+  filter: blur(0.3px);
+  transform-origin: 50% 50%;
+  animation: water-ripple 11s ease-in-out infinite;
+}
+
+body.liquid-glass .liquid-water::after {
+  opacity: 0.28;
+  background:
+    repeating-radial-gradient(ellipse at 45% 58%, rgba(103, 232, 249, 0.18) 0 1px, transparent 2px 28px),
+    linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.08), transparent);
+  animation: water-ripple-alt 15s ease-in-out infinite reverse;
+}
+
+body.liquid-glass .app-shell,
+body.liquid-glass .toast-host,
+body.liquid-glass .modal {
+  position: relative;
+  z-index: 1;
+}
+
+@keyframes water-sway {
+  0% {
+    transform: translate3d(-2%, -1%, 0) scale(1.03) rotate(-1deg);
+    filter: hue-rotate(0deg) saturate(1.25);
+  }
+  50% {
+    transform: translate3d(2%, 1.5%, 0) scale(1.08) rotate(1deg);
+    filter: hue-rotate(8deg) saturate(1.45);
+  }
+  100% {
+    transform: translate3d(-1%, 2%, 0) scale(1.04) rotate(-0.4deg);
+    filter: hue-rotate(-5deg) saturate(1.35);
+  }
+}
+
+@keyframes water-ripple {
+  0% {
+    transform: translate3d(-1.5%, 0, 0) rotate(0deg) scale(1);
+  }
+  50% {
+    transform: translate3d(1.5%, 1%, 0) rotate(2deg) scale(1.05);
+  }
+  100% {
+    transform: translate3d(-0.5%, 2%, 0) rotate(-1deg) scale(1.02);
+  }
+}
+
+@keyframes water-ripple-alt {
+  0% {
+    transform: translate3d(1%, -1%, 0) rotate(3deg) scale(1.04);
+  }
+  100% {
+    transform: translate3d(-2%, 2%, 0) rotate(-2deg) scale(1.08);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body.liquid-glass,
+  body.liquid-glass .liquid-water,
+  body.liquid-glass .liquid-water::before,
+  body.liquid-glass .liquid-water::after {
+    animation: none;
+  }
 }
 
 @media (max-width: 480px) {
