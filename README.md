@@ -9,6 +9,9 @@ Qolgan bo'limlar ham faol:
 - `Qidirmoq` savol, javob, mavzu va izohlar ichidan qidiradi.
 - `Mavzulashtirilgan testlar` topic bo'yicha test boshlaydi.
 - `Sozlamalar` matn kattaligi, zich rejim, tema va profil boshqaruvini beradi.
+- Admin login oynasida kamera orqali Face ID kirish mavjud; reference rasmlar private `rasmlar` papkasidan olinadi.
+
+Face ID kamera oqimi productionda faqat HTTPS domen orqali ishlaydi. `rasmlar` ichidagi biometrik suratlar GitHub'ga commit qilinmaydi va serverga alohida private tarzda ko'chiriladi. Bu oddiy kamera-rasm solishtirish bo'lib, bank darajasidagi liveness tekshiruvi emas; yuqori xavfsizlik uchun admin paroli yoki WebAuthn/Windows Hello ikkinchi himoya sifatida saqlanishi kerak.
 
 ## Ishga tushirish
 

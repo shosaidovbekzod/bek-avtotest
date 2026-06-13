@@ -14,6 +14,10 @@ class LoginIn(BaseModel):
     password: str
 
 
+class FaceLoginIn(BaseModel):
+    image: str = Field(min_length=1000, max_length=8_500_000)
+
+
 class TokenOut(BaseModel):
     token: str
     user: dict

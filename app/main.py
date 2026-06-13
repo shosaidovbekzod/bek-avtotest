@@ -1,10 +1,12 @@
 from pathlib import Path
+from threading import Thread
 from fastapi import FastAPI, HTTPException
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 
 from .config import ROOT_DIR, get_settings
 from .database import Base, SessionLocal, engine
+from .face_auth import FaceAuthError, warm_face_cache
 from .routers import admin, auth, quiz
 from .seed import seed_database
 
@@ -29,6 +31,14 @@ def startup() -> None:
     Base.metadata.create_all(bind=engine)
     with SessionLocal() as db:
         seed_database(db)
+    if settings.face_id_enabled:
+        def warm_cache() -> None:
+            try:
+                warm_face_cache(settings.face_id_images_dir)
+            except FaceAuthError:
+                pass
+
+        Thread(target=warm_cache, name="face-id-cache", daemon=True).start()
 
 
 @app.get("/")

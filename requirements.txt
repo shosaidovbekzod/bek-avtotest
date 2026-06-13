@@ -5,3 +5,4 @@ psycopg[binary]==3.2.3
 python-multipart==0.0.20
 cryptography==46.0.5
 pypdf==6.10.2
+opencv-python-headless==4.10.0.84

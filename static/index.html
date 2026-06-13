@@ -63,6 +63,16 @@
         </label>
         <p id="authError" class="form-error"></p>
         <button id="authSubmit" class="primary-button full" type="submit">Kirish</button>
+        <button id="faceIdBtn" class="face-id-button" type="button">Face ID orqali admin panel</button>
+        <div id="faceIdPanel" class="face-id-panel hidden" aria-live="polite">
+          <video id="faceVideo" autoplay muted playsinline></video>
+          <canvas id="faceCanvas" class="hidden"></canvas>
+          <p id="faceIdStatus">Kamera ruxsatini tasdiqlang.</p>
+          <div class="face-id-actions">
+            <button id="faceRetryBtn" class="secondary-button" type="button">Qayta tekshirish</button>
+            <button id="faceCancelBtn" class="ghost-button" type="button">Bekor qilish</button>
+          </div>
+        </div>
         <button id="authModeBtn" class="link-button" type="button">Ro'yxatdan o'tish</button>
       </form>
     </dialog>

@@ -91,7 +91,26 @@ DATABASE_URL=postgresql://bek_avtotest:JUDA_MUSTAHKAM_PAROL@127.0.0.1:5432/bek_a
 ADMIN_USERNAME=admin
 ADMIN_PASSWORD=YANGI_ADMIN_PAROL
 TOKEN_TTL_HOURS=168
+FACE_ID_ENABLED=1
+FACE_ID_IMAGES_DIR=/opt/bek_avtotest/rasmlar
+FACE_ID_THRESHOLD=0.64
+FACE_ID_MAX_IMAGE_MB=6
 PYTHONUNBUFFERED=1
+```
+
+Admin yuz rasmlari public GitHub repoga joylanmaydi. Lokal kompyuterdagi `rasmlar` papkasini SCP/SFTP orqali serverdagi quyidagi private papkaga ko'chiring:
+
+```bash
+sudo mkdir -p /opt/bek_avtotest/rasmlar
+sudo chown ubuntu:ubuntu /opt/bek_avtotest/rasmlar
+chmod 700 /opt/bek_avtotest/rasmlar
+```
+
+Rasmlar ko'chirilgach:
+
+```bash
+chmod 600 /opt/bek_avtotest/rasmlar/*
+sudo systemctl restart bek-avtotest
 ```
 
 Keyin yana ishga tushiring:
@@ -135,6 +154,8 @@ server_name example.uz www.example.uz;
 ```
 
 ## 7. HTTPS
+
+Face ID kamera funksiyasi brauzer xavfsizlik qoidasi bo'yicha faqat `https://` yoki `localhost`da ishlaydi. Oddiy `http://PUBLIC_IP` manzilida kamera ochilmaydi.
 
 Domain DNS ishlagandan keyin:
 

@@ -1216,6 +1216,59 @@ body.compact-mode .ticket-card {
   font-weight: 700;
 }
 
+.face-id-button {
+  min-height: 46px;
+  border: 1px solid color-mix(in srgb, var(--accent) 28%, var(--line));
+  border-radius: 12px;
+  background:
+    radial-gradient(circle at 18% 20%, color-mix(in srgb, var(--accent) 18%, transparent), transparent 30%),
+    var(--surface-2);
+  color: var(--text);
+  font-weight: 850;
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.07);
+}
+
+.face-id-panel {
+  display: grid;
+  gap: 12px;
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: color-mix(in srgb, var(--surface-2) 72%, transparent);
+}
+
+.face-id-panel video {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  border-radius: 12px;
+  background: #07111f;
+  object-fit: cover;
+  transform: scaleX(-1);
+  border: 1px solid var(--line);
+}
+
+.face-id-panel p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 750;
+  line-height: 1.45;
+}
+
+.face-id-panel p[data-tone="success"] {
+  color: var(--ok);
+}
+
+.face-id-panel p[data-tone="error"] {
+  color: var(--danger);
+}
+
+.face-id-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
 .hidden {
   display: none !important;
 }
@@ -1591,7 +1644,10 @@ body.liquid-glass .settings-row select,
 body.liquid-glass .admin-form input,
 body.liquid-glass .admin-form textarea,
 body.liquid-glass .admin-form select,
-body.liquid-glass .modal-card input {
+body.liquid-glass .modal-card input,
+body.liquid-glass .face-id-button,
+body.liquid-glass .face-id-panel,
+body.liquid-glass .face-id-panel video {
   position: relative;
   overflow: hidden;
   border-color: rgba(236, 253, 255, 0.38);
@@ -1677,6 +1733,7 @@ body.liquid-glass .nav-item.active::before,
 body.liquid-glass .secondary-button::before,
 body.liquid-glass .ghost-button::before,
 body.liquid-glass .text-button::before,
+body.liquid-glass .face-id-button::before,
 body.liquid-glass .top-icon::before,
 body.liquid-glass .icon-button::before {
   content: "";
@@ -1694,6 +1751,7 @@ body.liquid-glass .icon-button::before {
 body.liquid-glass .secondary-button,
 body.liquid-glass .ghost-button,
 body.liquid-glass .text-button,
+body.liquid-glass .face-id-button,
 body.liquid-glass .top-icon,
 body.liquid-glass .icon-button {
   position: relative;
@@ -1723,7 +1781,8 @@ body.liquid-glass .fine-card::before,
 body.liquid-glass .settings-row::before,
 body.liquid-glass .result-row::before,
 body.liquid-glass .modal-card::before,
-body.liquid-glass .stat-cell::before {
+body.liquid-glass .stat-cell::before,
+body.liquid-glass .face-id-panel::before {
   content: "";
   position: absolute;
   inset: 0;

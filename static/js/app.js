@@ -66,6 +66,16 @@ const authModeBtn = document.querySelector("#authModeBtn");
 const authSubmit = document.querySelector("#authSubmit");
 const authError = document.querySelector("#authError");
 const fullNameWrap = document.querySelector("#fullNameWrap");
+const faceIdBtn = document.querySelector("#faceIdBtn");
+const faceIdPanel = document.querySelector("#faceIdPanel");
+const faceVideo = document.querySelector("#faceVideo");
+const faceCanvas = document.querySelector("#faceCanvas");
+const faceIdStatus = document.querySelector("#faceIdStatus");
+const faceRetryBtn = document.querySelector("#faceRetryBtn");
+const faceCancelBtn = document.querySelector("#faceCancelBtn");
+
+let faceStream = null;
+let faceBusy = false;
 
 const navItems = [
   { key: "home", label: "Asosiy", icon: "grid" },
@@ -995,12 +1005,109 @@ async function renderAdmin() {
 function openAuth(mode = "login") {
   state.authMode = mode;
   authError.textContent = "";
+  stopFaceCamera();
   const isRegister = mode === "register";
   authTitle.textContent = isRegister ? "Ro'yxatdan o'tish" : "Kirish";
   authSubmit.textContent = isRegister ? "Ro'yxatdan o'tish" : "Kirish";
   authModeBtn.textContent = isRegister ? "Login orqali kirish" : "Ro'yxatdan o'tish";
   fullNameWrap.classList.toggle("hidden", !isRegister);
+  faceIdBtn?.classList.toggle("hidden", isRegister);
+  faceIdPanel?.classList.add("hidden");
+  setFaceStatus("Kamera ruxsatini tasdiqlang.");
   authDialog.showModal();
+}
+
+function setFaceStatus(message, tone = "info") {
+  if (!faceIdStatus) return;
+  faceIdStatus.textContent = message;
+  faceIdStatus.dataset.tone = tone;
+}
+
+function stopFaceCamera() {
+  if (faceStream) {
+    faceStream.getTracks().forEach((track) => track.stop());
+    faceStream = null;
+  }
+  if (faceVideo) faceVideo.srcObject = null;
+  faceBusy = false;
+}
+
+async function waitForFaceVideo() {
+  if (!faceVideo) return;
+  if (faceVideo.readyState >= 2 && faceVideo.videoWidth) return;
+  await new Promise((resolve, reject) => {
+    const timeout = window.setTimeout(() => {
+      cleanup();
+      reject(new Error("Kamera tasviri kechikyapti. Qayta urinib ko'ring."));
+    }, 9000);
+    function cleanup() {
+      window.clearTimeout(timeout);
+      faceVideo.removeEventListener("loadedmetadata", onLoaded);
+      faceVideo.removeEventListener("canplay", onLoaded);
+    }
+    function onLoaded() {
+      cleanup();
+      resolve();
+    }
+    faceVideo.addEventListener("loadedmetadata", onLoaded, { once: true });
+    faceVideo.addEventListener("canplay", onLoaded, { once: true });
+  });
+}
+
+async function captureFaceFrame() {
+  if (!faceVideo || !faceCanvas) throw new Error("Face ID kamera oynasi topilmadi.");
+  await waitForFaceVideo();
+  const width = Math.min(720, faceVideo.videoWidth || 640);
+  const height = Math.round(width * ((faceVideo.videoHeight || 480) / (faceVideo.videoWidth || 640)));
+  faceCanvas.width = width;
+  faceCanvas.height = height;
+  const context = faceCanvas.getContext("2d");
+  if (!context) throw new Error("Kamera rasmini tayyorlab bo'lmadi.");
+  context.drawImage(faceVideo, 0, 0, width, height);
+  return faceCanvas.toDataURL("image/jpeg", 0.86);
+}
+
+async function startFaceAdminLogin() {
+  if (faceBusy) return;
+  if (!navigator.mediaDevices?.getUserMedia) {
+    setFaceStatus("Bu brauzer kamera orqali kirishni qo'llab-quvvatlamaydi.", "error");
+    return;
+  }
+  if (!window.isSecureContext) {
+    setFaceStatus("Kamera uchun HTTPS kerak. Localhostda yoki domenni SSL bilan oching.", "error");
+    return;
+  }
+  faceBusy = true;
+  authError.textContent = "";
+  faceIdPanel?.classList.remove("hidden");
+  setFaceStatus("Kamera ruxsatini kutyapmiz...", "info");
+  try {
+    if (!faceStream) {
+      faceStream = await navigator.mediaDevices.getUserMedia({
+        video: { facingMode: "user", width: { ideal: 720 }, height: { ideal: 540 } },
+        audio: false,
+      });
+      faceVideo.srcObject = faceStream;
+      await faceVideo.play();
+    }
+    setFaceStatus("Yuzingizni kameraga to'g'ri qarating. Tekshirilmoqda...", "info");
+    await new Promise((resolve) => window.setTimeout(resolve, 650));
+    const image = await captureFaceFrame();
+    const data = await api("/api/auth/face-admin", { method: "POST", body: JSON.stringify({ image }) });
+    setUser(data.token, data.user);
+    setFaceStatus("Yuz tasdiqlandi. Admin panel ochilmoqda...", "success");
+    stopFaceCamera();
+    authDialog.close();
+    authForm.reset();
+    setView("admin", "Admin panel", renderAdmin);
+    showToast("Face ID orqali admin panelga kirdingiz", "success");
+  } catch (error) {
+    setFaceStatus(error.message || "Face ID tekshiruvida xatolik yuz berdi.", "error");
+    authError.textContent = error.message || "";
+    showToast(error.message || "Face ID xatosi", "error");
+  } finally {
+    faceBusy = false;
+  }
 }
 
 document.addEventListener("pointerdown", (event) => {
@@ -1198,6 +1305,7 @@ authForm.addEventListener("submit", async (event) => {
   try {
     const data = await api(`/api/auth/${state.authMode}`, { method: "POST", body: JSON.stringify(payload) });
     setUser(data.token, data.user);
+    stopFaceCamera();
     authDialog.close();
     authForm.reset();
   } catch (error) {
@@ -1240,7 +1348,18 @@ logoutBtn.addEventListener("click", async () => {
 adminBtn.addEventListener("click", () => setView("admin", "Admin panel", renderAdmin));
 backBtn.addEventListener("click", goBack);
 authModeBtn.addEventListener("click", () => openAuth(state.authMode === "login" ? "register" : "login"));
-document.querySelector(".modal-close").addEventListener("click", () => authDialog.close());
+document.querySelector(".modal-close").addEventListener("click", () => {
+  stopFaceCamera();
+  authDialog.close();
+});
+authDialog.addEventListener("close", stopFaceCamera);
+faceIdBtn?.addEventListener("click", startFaceAdminLogin);
+faceRetryBtn?.addEventListener("click", startFaceAdminLogin);
+faceCancelBtn?.addEventListener("click", () => {
+  stopFaceCamera();
+  faceIdPanel?.classList.add("hidden");
+  setFaceStatus("Kamera ruxsatini tasdiqlang.");
+});
 themeBtn.addEventListener("click", cycleTheme);
 
 applyTheme();
